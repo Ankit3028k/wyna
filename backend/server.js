@@ -29,7 +29,8 @@ const corsOptions = {
   origin: [
     process.env.CLIENT_URL || 'http://localhost:3000',
     'http://localhost:3000',
-    'http://127.0.0.1:3000',
+    'https://wyna.in',
+    'https://www.wyna.in',
     'http://72.61.238.132:3000'
   ],
   credentials: true,
