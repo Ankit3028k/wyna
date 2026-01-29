@@ -13,7 +13,7 @@ This project uses environment variables to configure the API base URL for differ
 The API base URL is configured using the `REACT_APP_API_URL` environment variable:
 
 ```
-REACT_APP_API_URL=http://72.61.238.132:5000
+REACT_APP_API_URL=https://wyna.in
 ```
 
 ## Usage
@@ -52,7 +52,7 @@ The `API_CONFIG.ENDPOINTS` object contains all available API endpoints:
 
 ## Development vs Production
 
-During development, the app will use `http://http://72.61.238.132:5000` by default.
-In production, it will use `http://72.61.238.132:5000`.
+During development, the app will use `http://https://wyna.in` by default.
+In production, it will use `https://wyna.in`.
 
 You can override these by setting the `REACT_APP_API_URL` environment variable.

@@ -17,7 +17,7 @@ REACT_APP_API_URL=http://localhost:5000
 
 This overrides the `.env.development` and `.env.production` files that correctly contain:
 ```
-REACT_APP_API_URL=http://72.61.238.132:5000
+REACT_APP_API_URL=https://wyna.in
 ```
 
 ## ✅ Fix Applied
@@ -28,7 +28,7 @@ Updated `src/config/api.js` to force the correct URL:
 ```javascript
 // Force the correct URL if environment variable is not set or is wrong
 const configuredUrl = process.env.REACT_APP_API_URL;
-const correctUrl = 'http://72.61.238.132:5000';
+const correctUrl = 'https://wyna.in';
 const finalBaseUrl = (configuredUrl && configuredUrl.includes('72.61.238.132')) ? configuredUrl : correctUrl;
 ```
 
@@ -54,7 +54,7 @@ Added `ApiTest` component that:
 
 2. **Check Home Page**:
    - Look for debug box (green = correct, red = wrong)
-   - Should show: `http://72.61.238.132:5000`
+   - Should show: `https://wyna.in`
 
 3. **Check Browser Console**:
    - Look for "=== API CONFIG DEBUG ==="
@@ -67,7 +67,7 @@ Added `ApiTest` component that:
 ## 🎯 Expected Results
 
 - ✅ Debug box shows GREEN (correct URL)
-- ✅ Console shows: `Final BASE_URL: http://72.61.238.132:5000`
+- ✅ Console shows: `Final BASE_URL: https://wyna.in`
 - ✅ Network requests go to `72.61.238.132:5000`
 - ✅ No localhost requests
 
@@ -78,14 +78,14 @@ If you prefer to fix the root cause instead:
 1. **Check `.env` file**:
    ```bash
    # Make sure it contains:
-   REACT_APP_API_URL=http://72.61.238.132:5000
+   REACT_APP_API_URL=https://wyna.in
    ```
 
 2. **Or delete `.env`** to let `.env.development` take precedence
 
 3. **Or override at startup**:
    ```bash
-   REACT_APP_API_URL=http://72.61.238.132:5000 npm start
+   REACT_APP_API_URL=https://wyna.in npm start
    ```
 
 The current fix ensures the correct URL is always used regardless of environment variable issues.

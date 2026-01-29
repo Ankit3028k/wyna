@@ -1,7 +1,7 @@
 # Backend Connection Test
 
 ## ✅ Frontend Configuration Fixed
-The frontend is now correctly sending requests to `http://72.61.238.132:5000/api/products`
+The frontend is now correctly sending requests to `https://wyna.in/api/products`
 
 ## 🔍 Current Issue: 404 Not Found
 The backend server at `72.61.238.132:5000` is responding, but the `/api/products` endpoint returns 404.
@@ -10,12 +10,12 @@ The backend server at `72.61.238.132:5000` is responding, but the `/api/products
 
 ### 1. Test Health Endpoint
 ```bash
-curl http://72.61.238.132:5000/api/health
+curl https://wyna.in/api/health
 ```
 
 ### 2. Test Products Endpoint Directly
 ```bash
-curl http://72.61.238.132:5000/api/products
+curl https://wyna.in/api/products
 ```
 
 ### 3. Check if Backend is Running

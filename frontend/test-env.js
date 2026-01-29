@@ -11,9 +11,9 @@ Object.keys(process.env).forEach(key => {
 
 // Test API_CONFIG
 const API_CONFIG = {
-  BASE_URL: process.env.REACT_APP_API_URL || 'http://72.61.238.132:5000'
+  BASE_URL: process.env.REACT_APP_API_URL || 'https://wyna.in'
 };
 
 console.log('API_CONFIG.BASE_URL:', API_CONFIG.BASE_URL);
-console.log('Expected: http://72.61.238.132:5000');
-console.log('Match?', API_CONFIG.BASE_URL === 'http://72.61.238.132:5000');
+console.log('Expected: https://wyna.in');
+console.log('Match?', API_CONFIG.BASE_URL === 'https://wyna.in');

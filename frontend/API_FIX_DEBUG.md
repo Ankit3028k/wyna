@@ -1,17 +1,17 @@
 # API Configuration Fix - Debugging localhost Issue
 
 ## Problem Analysis
-Frontend is configured to use `http://72.61.238.132:5000` but requests are going to `localhost:5000`.
+Frontend is configured to use `https://wyna.in` but requests are going to `localhost:5000`.
 
 ## Configuration Status
 ✅ **Environment Files**: 
-- `.env.development`: `REACT_APP_API_URL=http://72.61.238.132:5000`
-- `.env.production`: `REACT_APP_API_URL=http://72.61.238.132:5000`
+- `.env.development`: `REACT_APP_API_URL=https://wyna.in`
+- `.env.production`: `REACT_APP_API_URL=https://wyna.in`
 
 ✅ **API Configuration**: 
 - All fetch calls correctly use `API_CONFIG.buildUrl()`
 - No hardcoded localhost URLs found
-- Proper fallback to `http://72.61.238.132:5000`
+- Proper fallback to `https://wyna.in`
 
 ✅ **No Proxy Settings**: 
 - No proxy configuration found in package.json
@@ -69,8 +69,8 @@ Added test component to Home page for real-time debugging
    - Compare displayed URLs with expected values
 
 ## Expected Results
-- REACT_APP_API_URL should show: `http://72.61.238.132:5000`
-- BASE_URL should show: `http://72.61.238.132:5000`
+- REACT_APP_API_URL should show: `https://wyna.in`
+- BASE_URL should show: `https://wyna.in`
 - All fetch requests should go to `72.61.238.132:5000`, not `localhost:5000`
 
 ## If Issue Persists
@@ -79,5 +79,5 @@ Added test component to Home page for real-time debugging
 3. Check browser developer tools Network tab for actual request URLs
 4. Consider using environment variable override:
    ```bash
-   REACT_APP_API_URL=http://72.61.238.132:5000 npm start
+   REACT_APP_API_URL=https://wyna.in npm start
    ```

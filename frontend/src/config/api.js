@@ -5,17 +5,13 @@ console.log('typeof process.env.REACT_APP_API_URL:', typeof process.env.REACT_AP
 console.log('All REACT_APP_ env vars:', Object.keys(process.env).filter(key => key.startsWith('REACT_APP_')));
 console.log('NODE_ENV:', process.env.NODE_ENV);
 
-// Force the correct URL if environment variable is not set or is wrong
-const configuredUrl = process.env.REACT_APP_API_URL;
-const correctUrl = 'http://72.61.238.132:5000';
-const finalBaseUrl = (configuredUrl && configuredUrl.includes('72.61.238.132')) ? configuredUrl : correctUrl;
+// Use environment variable or fallback to production URL
+const configuredUrl = process.env.REACT_APP_API_URL || 'https://wyna.in';
 
 console.log('Configured URL:', configuredUrl);
-console.log('Final BASE_URL:', finalBaseUrl);
 
 const API_CONFIG = {
-  BASE_URL: finalBaseUrl,
-  ACTUAL_BASE_URL: configuredUrl,
+  BASE_URL: configuredUrl,
   
   // Debug method to check URL construction
   debugUrlConstruction() {

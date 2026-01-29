@@ -22,7 +22,7 @@ const ApiTest = () => {
       });
   }, []);
 
-  const expectedUrl = 'http://72.61.238.132:5000';
+  const expectedUrl = 'https://wyna.in';
   const isCorrect = API_CONFIG.BASE_URL === expectedUrl;
 
   return (
