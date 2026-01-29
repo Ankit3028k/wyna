@@ -1,0 +1,531 @@
+/* Aura Weaver Interactive Customization Tool */
+.aura-weaver {
+  background: linear-gradient(135deg, var(--wyna-deep-cream) 0%, var(--wyna-cream) 100%);
+  border-radius: 25px;
+  padding: 3rem;
+  margin: 2rem 0;
+  box-shadow: 0 20px 60px var(--wyna-shadow-red);
+  border: 2px solid var(--wyna-soft-gold);
+  position: relative;
+  overflow: hidden;
+}
+
+.aura-weaver::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--wyna-gold), var(--wyna-orange), var(--wyna-gold));
+  animation: shimmer 3s linear infinite;
+}
+
+.aura-weaver-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.aura-weaver-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  color: var(--wyna-red);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.aura-weaver-title i {
+  color: var(--wyna-gold);
+  font-size: 2rem;
+}
+
+.aura-weaver-subtitle {
+  font-family: 'Crimson Text', serif;
+  font-size: 1.2rem;
+  color: var(--wyna-text-light);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.weaver-workspace {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 3rem;
+  align-items: start;
+}
+
+/* Preview Section */
+.preview-section {
+  background: #fff;
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 10px 30px rgba(139, 0, 0, 0.1);
+  text-align: center;
+}
+
+.saree-preview {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.saree-canvas {
+  width: 100%;
+  height: 300px;
+  border-radius: 15px;
+  overflow: hidden;
+  position: relative;
+  transition: all 0.5s ease;
+}
+
+.saree-canvas.weaving {
+  animation: weave 2s ease-in-out;
+}
+
+@keyframes weave {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  25% { transform: scale(1.05) rotate(1deg); }
+  50% { transform: scale(1.1) rotate(-1deg); }
+  75% { transform: scale(1.05) rotate(1deg); }
+}
+
+.saree-base {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.pattern-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0.6;
+  mix-blend-mode: multiply;
+}
+
+/* Pattern Styles */
+.pattern-traditional {
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 10px,
+    rgba(255, 215, 0, 0.3) 10px,
+    rgba(255, 215, 0, 0.3) 20px
+  );
+}
+
+.pattern-modern {
+  background: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 15px,
+    rgba(255, 255, 255, 0.2) 15px,
+    rgba(255, 255, 255, 0.2) 30px
+  );
+}
+
+.pattern-floral {
+  background: radial-gradient(
+    circle at 20% 80%, rgba(255, 182, 193, 0.4) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 182, 193, 0.4) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(255, 215, 0, 0.3) 0%, transparent 40%);
+}
+
+.pattern-geometric {
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 20px,
+    rgba(255, 255, 255, 0.2) 20px,
+    rgba(255, 255, 255, 0.2) 21px
+  ),
+  repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 20px,
+    rgba(255, 255, 255, 0.2) 20px,
+    rgba(255, 255, 255, 0.2) 21px
+  );
+}
+
+.pattern-paisley {
+  background: repeating-radial-gradient(
+    circle at 0% 50%,
+    transparent 0,
+    rgba(255, 215, 0, 0.3) 10px,
+    transparent 20px
+  );
+}
+
+.pattern-peacock {
+  background: conic-gradient(
+    from 45deg,
+    transparent 0deg,
+    rgba(0, 191, 255, 0.3) 90deg,
+    transparent 180deg,
+    rgba(255, 215, 0, 0.3) 270deg,
+    transparent 360deg
+  );
+}
+
+.fabric-texture {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.fabric-texture[data-fabric="silk"] {
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 2px,
+    rgba(255, 255, 255, 0.1) 2px,
+    rgba(255, 255, 255, 0.1) 4px
+  );
+}
+
+.fabric-texture[data-fabric="banarasi"] {
+  background: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 3px,
+    rgba(255, 215, 0, 0.2) 3px,
+    rgba(255, 215, 0, 0.2) 6px
+  );
+}
+
+.fabric-texture[data-fabric="blended"] {
+  background: repeating-linear-gradient(
+    135deg,
+    transparent,
+    transparent 4px,
+    rgba(255, 255, 255, 0.15) 4px,
+    rgba(255, 255, 255, 0.15) 8px
+  );
+}
+
+.fabric-texture[data-fabric="tussar"] {
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 1px,
+    rgba(139, 69, 19, 0.1) 1px,
+    rgba(139, 69, 19, 0.1) 2px
+  );
+}
+
+.weaving-animation {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.weaving-thread {
+  position: absolute;
+  top: 50%;
+  left: -10px;
+  width: 10px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--wyna-gold), transparent);
+  animation: threadMove 2s linear infinite;
+}
+
+@keyframes threadMove {
+  0% { left: -10px; }
+  100% { left: calc(100% + 10px); }
+}
+
+.weaving-sparkles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(255, 215, 0, 0.3) 0%, transparent 70%);
+  animation: sparkle 2s ease-in-out infinite;
+}
+
+@keyframes sparkle {
+  0%, 100% { opacity: 0; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+.preview-info h3 {
+  font-family: 'Playfair Display', serif;
+  color: var(--wyna-red);
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+.preview-info p {
+  font-family: 'Crimson Text', serif;
+  color: var(--wyna-text-light);
+  margin: 0.5rem 0;
+  font-size: 1rem;
+}
+
+/* Customization Controls */
+.customization-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.control-group {
+  background: #fff;
+  border-radius: 15px;
+  padding: 1.5rem;
+  box-shadow: 0 5px 20px rgba(139, 0, 0, 0.1);
+}
+
+.control-title {
+  font-family: 'Playfair Display', serif;
+  color: var(--wyna-red);
+  margin-bottom: 1.5rem;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.control-title i {
+  color: var(--wyna-gold);
+  font-size: 1rem;
+}
+
+/* Pattern Grid */
+.pattern-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.pattern-option {
+  background: var(--wyna-deep-cream);
+  border: 2px solid transparent;
+  border-radius: 12px;
+  padding: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.pattern-option:hover {
+  border-color: var(--wyna-soft-gold);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 215, 0, 0.2);
+}
+
+.pattern-option.active {
+  border-color: var(--wyna-gold);
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(255, 237, 78, 0.1) 100%);
+}
+
+.pattern-icon {
+  font-size: 2rem;
+}
+
+.pattern-name {
+  font-size: 0.9rem;
+  color: var(--wyna-text-dark);
+  font-weight: 500;
+  text-align: center;
+}
+
+/* Color Grid */
+.color-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.color-option {
+  height: 60px;
+  border: 3px solid transparent;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.color-option:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.color-option.active {
+  border-color: var(--wyna-gold);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+}
+
+.color-name {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  padding: 0.3rem;
+  font-size: 0.75rem;
+  text-align: center;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+
+.color-option:hover .color-name {
+  transform: translateY(0);
+}
+
+/* Fabric Grid */
+.fabric-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.fabric-option {
+  background: var(--wyna-deep-cream);
+  border: 2px solid transparent;
+  border-radius: 12px;
+  padding: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: left;
+}
+
+.fabric-option:hover {
+  border-color: var(--wyna-soft-gold);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 215, 0, 0.2);
+}
+
+.fabric-option.active {
+  border-color: var(--wyna-gold);
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(255, 237, 78, 0.1) 100%);
+}
+
+.fabric-option h5 {
+  font-family: 'Playfair Display', serif;
+  color: var(--wyna-red);
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+.fabric-option p {
+  font-size: 0.85rem;
+  color: var(--wyna-text-light);
+  margin: 0;
+}
+
+/* Action Buttons */
+.weaver-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.btn {
+  padding: 1rem 2rem;
+  border-radius: 25px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  flex: 1;
+  justify-content: center;
+}
+
+.btn-secondary {
+  background: var(--wyna-deep-cream);
+  color: var(--wyna-text-dark);
+  border: 2px solid var(--wyna-soft-gold);
+}
+
+.btn-secondary:hover {
+  background: var(--wyna-soft-gold);
+  color: var(--wyna-red);
+  transform: translateY(-2px);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--wyna-gold) 0%, var(--wyna-orange) 100%);
+  color: var(--wyna-red);
+  box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(255, 215, 0, 0.4);
+}
+
+.weave-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Responsive Design */
+@media (max-width: 968px) {
+  .weaver-workspace {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  .aura-weaver {
+    padding: 2rem;
+  }
+  
+  .aura-weaver-title {
+    font-size: 2rem;
+  }
+  
+  .pattern-grid,
+  .fabric-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .color-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .aura-weaver {
+    padding: 1.5rem;
+    margin: 1rem 0;
+  }
+  
+  .aura-weaver-title {
+    font-size: 1.8rem;
+  }
+  
+  .weaver-actions {
+    flex-direction: column;
+  }
+  
+  .color-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,4 @@
+/* Create uploads directory for images */
+mkdir -p uploads/images/products
+mkdir -p uploads/images/categories
+mkdir -p uploads/images

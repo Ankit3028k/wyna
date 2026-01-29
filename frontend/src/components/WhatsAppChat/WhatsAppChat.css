@@ -1,0 +1,231 @@
+/* WhatsApp Chat Widget */
+.whatsapp-chat-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  font-family: var(--font-body);
+}
+
+/* Floating Button */
+.whatsapp-floating-btn {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #25d366, #128c7e);
+  color: white;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.whatsapp-floating-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+}
+
+.whatsapp-floating-btn:active {
+  transform: scale(0.95);
+}
+
+/* Pulse Animation */
+.whatsapp-floating-btn .pulse {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 2px solid rgba(37, 211, 102, 0.5);
+  animation: whatsapp-pulse 2s infinite;
+}
+
+@keyframes whatsapp-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.3);
+    opacity: 0;
+  }
+}
+
+.whatsapp-floating-btn.open {
+  transform: scale(1);
+}
+
+/* Chat Box */
+.whatsapp-chat-box {
+  position: absolute;
+  bottom: 80px;
+  right: 0;
+  width: 320px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 5px 40px rgba(0, 0, 0, 0.16);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Chat Header */
+.chat-header {
+  background: linear-gradient(135deg, #25d366, #128c7e);
+  color: white;
+  padding: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chat-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.8rem;
+  cursor: pointer;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s;
+}
+
+.close-btn:hover {
+  transform: rotate(90deg);
+}
+
+/* Chat Content */
+.chat-content {
+  padding: 1.5rem;
+  flex: 1;
+}
+
+.welcome-message {
+  margin: 0 0 1rem;
+  font-size: 0.95rem;
+  color: #333;
+  line-height: 1.5;
+}
+
+.phone-display {
+  margin: 0;
+  padding: 1rem;
+  background: #f0f0f0;
+  border-radius: 8px;
+  font-weight: 600;
+  color: #25d366;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.95rem;
+}
+
+.phone-display i {
+  font-size: 1.1rem;
+}
+
+/* Main Button */
+.whatsapp-btn-main {
+  background: linear-gradient(135deg, #25d366, #128c7e);
+  color: white;
+  border: none;
+  padding: 1rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin: 0;
+  border-radius: 0;
+}
+
+.whatsapp-btn-main:hover {
+  background: linear-gradient(135deg, #20ba5a, #0d7d73);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+}
+
+.whatsapp-btn-main:active {
+  transform: translateY(0);
+}
+
+.whatsapp-btn-main i {
+  font-size: 1.3rem;
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+  .whatsapp-chat-container {
+    bottom: 15px;
+    right: 15px;
+  }
+
+  .whatsapp-floating-btn {
+    width: 55px;
+    height: 55px;
+    font-size: 1.8rem;
+  }
+
+  .whatsapp-chat-box {
+    width: 280px;
+    bottom: 70px;
+  }
+
+  .chat-header h3 {
+    font-size: 1rem;
+  }
+
+  .chat-content {
+    padding: 1rem;
+  }
+
+  .welcome-message {
+    font-size: 0.9rem;
+  }
+
+  .phone-display {
+    font-size: 0.9rem;
+    padding: 0.75rem;
+  }
+
+  .whatsapp-btn-main {
+    padding: 0.85rem 1.25rem;
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .whatsapp-chat-box {
+    width: calc(100vw - 30px);
+    bottom: 65px;
+  }
+}

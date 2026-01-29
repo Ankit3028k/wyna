@@ -1,0 +1,16 @@
+/* Scroll Progress Bar */
+.scroll-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: var(--wyna-gold);
+  z-index: 1000;
+  transition: width 0.1s ease;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+/* Add glow effect on scroll completion */
+.scroll-progress-bar.full {
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+}

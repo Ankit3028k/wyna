@@ -1,0 +1,68 @@
+// API Configuration
+console.log('=== API CONFIG DEBUG ===');
+console.log('Environment REACT_APP_API_URL:', process.env.REACT_APP_API_URL);
+console.log('typeof process.env.REACT_APP_API_URL:', typeof process.env.REACT_APP_API_URL);
+console.log('All REACT_APP_ env vars:', Object.keys(process.env).filter(key => key.startsWith('REACT_APP_')));
+console.log('NODE_ENV:', process.env.NODE_ENV);
+
+// Force the correct URL if environment variable is not set or is wrong
+const configuredUrl = process.env.REACT_APP_API_URL;
+const correctUrl = 'http://72.61.238.132:5000';
+const finalBaseUrl = (configuredUrl && configuredUrl.includes('72.61.238.132')) ? configuredUrl : correctUrl;
+
+console.log('Configured URL:', configuredUrl);
+console.log('Final BASE_URL:', finalBaseUrl);
+
+const API_CONFIG = {
+  BASE_URL: finalBaseUrl,
+  ACTUAL_BASE_URL: configuredUrl,
+  
+  // Debug method to check URL construction
+  debugUrlConstruction() {
+    console.log('=== URL Construction Debug ===');
+    console.log('BASE_URL:', this.BASE_URL);
+    console.log('typeof BASE_URL:', typeof this.BASE_URL);
+    console.log('ENDPOINTS.PRODUCTS:', this.ENDPOINTS.PRODUCTS);
+    console.log('Full URL:', this.buildUrl(this.ENDPOINTS.PRODUCTS));
+  },
+  
+  // API Endpoints
+  ENDPOINTS: {
+    // Auth
+    AUTH_ADMIN_LOGIN: '/api/auth/admin/login',
+    AUTH_ADMIN_REGISTER: '/api/auth/admin/register',
+    AUTH_ADMIN_VERIFY: '/api/auth/admin/verify',
+    
+    // Products
+    PRODUCTS: '/api/products',
+    PRODUCTS_FEATURED: '/api/products/featured/home',
+    
+    // Categories
+    CATEGORIES: '/api/categories',
+    CATEGORIES_FEATURED: '/api/categories/featured',
+    
+    // Orders
+    ORDERS_ADMIN_ALL: '/api/orders/admin/all',
+    ORDERS_ADMIN_STATUS: (orderId) => `/api/orders/admin/${orderId}/status`,
+    
+    // Upload
+    UPLOAD_MULTIPLE: (type) => `/api/upload/multiple/${type}`,
+    
+    // Images
+    IMAGES_LIST: (type) => `/api/images/list/${type}`,
+    IMAGES_TYPES: '/api/images/types'
+  },
+  
+  // Helper method to build full URLs
+  buildUrl(endpoint) {
+    const fullUrl = `${this.BASE_URL}${endpoint}`;
+    console.log('API Config - Building URL:', { 
+      baseUrl: this.BASE_URL, 
+      endpoint: endpoint, 
+      fullUrl: fullUrl 
+    });
+    return fullUrl;
+  }
+};
+
+export default API_CONFIG;

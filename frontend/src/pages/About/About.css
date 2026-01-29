@@ -1,0 +1,405 @@
+/* About Page Styles */
+.about-page {
+  padding: 40px 0;
+  background: linear-gradient(
+    135deg,
+    rgba(220, 20, 60, 0.05) 0%,
+    rgba(255, 215, 0, 0.05) 100%
+  );
+}
+
+.about-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.about-header h1 {
+  font-size: 2.5rem;
+  color: #dc143c;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+.tagline {
+  font-size: 1.2rem;
+  color: #d4af37;
+  font-style: italic;
+  max-width: 600px;
+  margin: 0 auto;
+  font-weight: 600;
+}
+
+.about-content {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.about-section {
+  margin-bottom: 50px;
+  padding: 30px;
+  background: white;
+  border-radius: 10px;
+  border-left: 5px solid #dc143c;
+  box-shadow: 0 2px 10px rgba(220, 20, 60, 0.1);
+}
+
+.about-section h3 {
+  color: #dc143c;
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+.story-section {
+  margin-bottom: 50px;
+}
+
+.story-section h2 {
+  font-size: 2rem;
+  margin-bottom: 30px;
+  color: #dc143c;
+}
+
+.story-content {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+}
+
+/* Owner Section with Image */
+.owner-statement {
+  border-left: 5px solid #d4af37 !important;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(255, 215, 0, 0.02) 100%
+  );
+}
+
+.owner-content {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.owner-image-container {
+  flex-shrink: 0;
+  width: 250px;
+  height: 300px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(220, 20, 60, 0.2);
+  border: 3px solid #d4af37;
+}
+
+.owner-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.owner-image-container:hover .owner-image {
+  transform: scale(1.05);
+}
+
+.owner-text {
+  flex: 1;
+}
+
+.owner-text p {
+  margin-bottom: 20px;
+  line-height: 1.8;
+  color: #333;
+  font-size: 1rem;
+}
+
+.story-text h3 {
+  color: #dc143c;
+  margin: 30px 0 15px 0;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.story-text h3:first-child {
+  margin-top: 0;
+}
+
+.story-text p {
+  margin-bottom: 20px;
+  line-height: 1.7;
+  color: #555;
+}
+
+.values-section {
+  background: linear-gradient(
+    135deg,
+    rgba(220, 20, 60, 0.08) 0%,
+    rgba(255, 215, 0, 0.08) 100%
+  );
+  padding: 50px;
+  border-radius: 10px;
+  margin-top: 50px;
+  border-top: 3px solid #dc143c;
+  border-bottom: 3px solid #d4af37;
+}
+
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 40px;
+}
+
+.value-item {
+  text-align: center;
+  padding: 25px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(220, 20, 60, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.value-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(220, 20, 60, 0.15);
+}
+
+.value-item h3 {
+  color: #dc143c;
+  margin-bottom: 15px;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.value-item p {
+  color: #555;
+  line-height: 1.6;
+}
+
+.founder {
+  text-align: center;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 215, 0, 0.1) 0%,
+    rgba(220, 20, 60, 0.1) 100%
+  );
+  border-left: 5px solid #d4af37 !important;
+}
+
+.founder p {
+  color: #333;
+  font-size: 1.1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .about-page {
+    padding: 30px 0;
+  }
+
+  .about-header h1 {
+    font-size: 2.2rem;
+  }
+
+  .tagline {
+    font-size: 1.1rem;
+  }
+
+  .story-section h2 {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-page {
+    padding: 25px 0;
+    background: linear-gradient(
+      135deg,
+      rgba(220, 20, 60, 0.03) 0%,
+      rgba(255, 215, 0, 0.03) 100%
+    );
+  }
+
+  .about-header {
+    margin-bottom: 35px;
+  }
+
+  .about-header h1 {
+    font-size: 2rem;
+    color: #dc143c;
+  }
+
+  .tagline {
+    font-size: 1.05rem;
+    color: #d4af37;
+  }
+
+  .about-section {
+    padding: 20px;
+    margin-bottom: 30px;
+  }
+
+  .story-section {
+    margin-bottom: 35px;
+  }
+
+  .story-section h2 {
+    font-size: 1.6rem;
+    margin-bottom: 20px;
+    color: #dc143c;
+  }
+
+  .story-content {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .owner-content {
+    flex-direction: column;
+    gap: 25px;
+    align-items: center;
+  }
+
+  .owner-image-container {
+    width: 100%;
+    max-width: 250px;
+    height: 300px;
+  }
+
+  .story-text h3 {
+    font-size: 1.2rem;
+    margin: 20px 0 12px 0;
+    color: #dc143c;
+  }
+
+  .values-section {
+    padding: 30px 20px;
+    margin-top: 35px;
+  }
+
+  .values-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+}
+
+@media (max-width: 576px) {
+  .about-page {
+    padding: 20px 0;
+  }
+
+  .about-header {
+    margin-bottom: 30px;
+  }
+
+  .about-header h1 {
+    font-size: 1.8rem;
+    color: #dc143c;
+  }
+
+  .tagline {
+    font-size: 1rem;
+    color: #d4af37;
+  }
+
+  .about-section {
+    padding: 20px 15px;
+    margin-bottom: 25px;
+  }
+
+  .about-section h3 {
+    font-size: 1.5rem;
+    color: #dc143c;
+  }
+
+  .story-section {
+    margin-bottom: 30px;
+  }
+
+  .story-section h2 {
+    font-size: 1.5rem;
+    color: #dc143c;
+  }
+
+  .story-text h3 {
+    font-size: 1.1rem;
+    color: #dc143c;
+  }
+
+  .story-text p {
+    font-size: 0.95rem;
+    margin-bottom: 15px;
+  }
+
+  .owner-image-container {
+    width: 100%;
+    height: 280px;
+  }
+
+  .values-section {
+    padding: 25px 15px;
+    border-radius: 8px;
+  }
+
+  .values-grid {
+    color: #dc143c;
+  }
+
+  .tagline {
+    font-size: 0.95rem;
+    color: #d4af37;
+  }
+
+  .about-section h3 {
+    font-size: 1.3rem;
+    color: #dc143c;
+  }
+
+  .story-section h2 {
+    font-size: 1.4rem;
+    color: #dc143c;
+  }
+
+  .story-text h3 {
+    font-size: 1.05rem;
+    color: #dc143c;
+  }
+
+  .story-text p {
+    font-size: 0.9rem;
+  }
+
+  .values-section {
+    padding: 20px 10px;
+  }
+
+  .value-item h3 {
+    font-size: 1.05rem;
+    color: #dc143c;
+  }
+
+  .story-section h2 {
+    font-size: 1.4rem;
+  }
+
+  .story-text h3 {
+    font-size: 1.05rem;
+  }
+
+  .story-text p {
+    font-size: 0.9rem;
+  }
+
+  .values-section {
+    padding: 20px 10px;
+  }
+
+  .value-item h3 {
+    font-size: 1.05rem;
+  }
+
+  .value-item p {
+    font-size: 0.9rem;
+  }
+}

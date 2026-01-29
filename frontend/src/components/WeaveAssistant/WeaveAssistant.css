@@ -1,0 +1,360 @@
+.weave-assistant {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 1000;
+}
+
+.assistant-bubble {
+  position: relative;
+  width: 70px;
+  height: 70px;
+  background: linear-gradient(135deg, var(--wyna-gold) 0%, var(--wyna-light-gold) 100%);
+  border-radius: 50%;
+  border: 3px solid var(--wyna-red);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
+  overflow: visible;
+}
+
+.assistant-bubble:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 15px 40px rgba(255, 215, 0, 0.6);
+  animation: bubblePulse 1.5s ease-in-out infinite;
+}
+
+.assistant-bubble.open {
+  background: linear-gradient(135deg, var(--wyna-red) 0%, var(--wyna-dark-red) 100%);
+  transform: scale(0.9);
+}
+
+.assistant-bubble i {
+  font-size: 1.5rem;
+  color: var(--wyna-red);
+  transition: all 0.3s ease;
+}
+
+.assistant-bubble.open i {
+  color: var(--wyna-gold);
+}
+
+.bubble-text {
+  position: absolute;
+  right: 80px;
+  background: var(--wyna-dark-red);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  transform: translateX(10px);
+}
+
+.assistant-bubble:hover .bubble-text {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
+}
+
+.pulse-dot {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 12px;
+  height: 12px;
+  background: #4caf50;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes bubblePulse {
+  0%, 100% {
+    transform: translateY(-5px) scale(1.05);
+  }
+  50% {
+    transform: translateY(-8px) scale(1.08);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.7;
+  }
+}
+
+.assistant-window {
+  position: absolute;
+  bottom: 80px;
+  right: 0;
+  width: 350px;
+  height: 500px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px) scale(0.9);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 2px solid var(--wyna-soft-gold);
+  overflow: hidden;
+}
+
+.assistant-window.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+.assistant-header {
+  background: linear-gradient(135deg, var(--wyna-red) 0%, var(--wyna-dark-red) 100%);
+  color: white;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.assistant-avatar {
+  width: 40px;
+  height: 40px;
+  background: var(--wyna-gold);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  color: var(--wyna-red);
+}
+
+.assistant-info h4 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.assistant-info p {
+  margin: 0;
+  font-size: 0.8rem;
+  opacity: 0.9;
+}
+
+.minimize-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.minimize-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+.assistant-messages {
+  flex: 1;
+  padding: 1rem;
+  overflow-y: auto;
+  max-height: 280px;
+  background: var(--wyna-ivory);
+}
+
+.message {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  align-items: flex-start;
+}
+
+.message.user {
+  flex-direction: row-reverse;
+}
+
+.message-avatar {
+  width: 30px;
+  height: 30px;
+  background: linear-gradient(135deg, var(--wyna-gold) 0%, var(--wyna-light-gold) 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  color: var(--wyna-red);
+  flex-shrink: 0;
+}
+
+.message.user .message-avatar {
+  background: linear-gradient(135deg, var(--wyna-red) 0%, var(--wyna-dark-red) 100%);
+  color: white;
+}
+
+.message-content {
+  max-width: 70%;
+  background: white;
+  padding: 0.75rem;
+  border-radius: 15px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.message.user .message-content {
+  background: linear-gradient(135deg, var(--wyna-red) 0%, var(--wyna-dark-red) 100%);
+  color: white;
+}
+
+.message-content p {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.typing-indicator {
+  display: flex;
+  gap: 0.25rem;
+  padding: 0.75rem;
+}
+
+.typing-indicator span {
+  width: 8px;
+  height: 8px;
+  background: var(--wyna-text-light);
+  border-radius: 50%;
+  animation: typing 1.4s infinite;
+}
+
+.typing-indicator span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.typing-indicator span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes typing {
+  0%, 60%, 100% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(-10px);
+  }
+}
+
+.assistant-quick-responses {
+  padding: 0.5rem 1rem;
+  background: white;
+  border-top: 1px solid var(--wyna-soft-gold);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.quick-response-btn {
+  background: var(--wyna-soft-ivory);
+  border: 1px solid var(--wyna-soft-gold);
+  padding: 0.4rem 0.8rem;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: var(--wyna-text-dark);
+}
+
+.quick-response-btn:hover {
+  background: var(--wyna-gold);
+  color: var(--wyna-red);
+  transform: translateY(-2px);
+}
+
+.assistant-input {
+  padding: 1rem;
+  background: white;
+  border-top: 1px solid var(--wyna-soft-gold);
+}
+
+.input-container {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.message-input {
+  flex: 1;
+  padding: 0.75rem;
+  border: 2px solid var(--wyna-soft-gold);
+  border-radius: 25px;
+  font-size: 0.9rem;
+  outline: none;
+  transition: all 0.3s ease;
+  background: var(--wyna-ivory);
+}
+
+.message-input:focus {
+  border-color: var(--wyna-gold);
+  background: white;
+}
+
+.send-btn {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, var(--wyna-gold) 0%, var(--wyna-light-gold) 100%);
+  border: none;
+  border-radius: 50%;
+  color: var(--wyna-red);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.send-btn:hover:not(:disabled) {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4);
+}
+
+.send-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .weave-assistant {
+    bottom: 1rem;
+    right: 1rem;
+  }
+
+  .assistant-bubble {
+    width: 60px;
+    height: 60px;
+  }
+
+  .assistant-window {
+    width: 300px;
+    height: 450px;
+    right: -50px;
+  }
+
+  .bubble-text {
+    display: none;
+  }
+}
