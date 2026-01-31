@@ -8,10 +8,19 @@ console.log('NODE_ENV:', process.env.NODE_ENV);
 // Use environment variable or fallback to production URL
 const configuredUrl = process.env.REACT_APP_API_URL || 'https://wyna.in';
 
+// Sanitize URL: remove old IP addresses, convert http to https, remove ports
+const sanitizedUrl = (configuredUrl || '')
+  .replace(/^http:\/\//, 'https://') // Convert http to https
+  .replace(/:[0-9]+$/, '') // Remove port numbers
+  .replace(/\/$/, ''); // Remove trailing slash
+
+const finalUrl = sanitizedUrl || 'https://wyna.in';
+
 console.log('Configured URL:', configuredUrl);
+console.log('Sanitized URL:', finalUrl);
 
 const API_CONFIG = {
-  BASE_URL: configuredUrl,
+  BASE_URL: finalUrl,
   
   // Debug method to check URL construction
   debugUrlConstruction() {

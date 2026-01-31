@@ -4,7 +4,7 @@ const cors = require("cors");
 require("dotenv").config();
 
 const connectDB = require("./config/db");
-const { errorHandler } = require('./middleware/error');
+const { errorHandler } = require("./middleware/error");
 
 // Import all routes
 const authRoutes = require("./routes/authRoutes");
@@ -27,16 +27,16 @@ connectDB();
 // CORS Configuration
 const corsOptions = {
   origin: [
-    process.env.CLIENT_URL || 'http://localhost:3000',
-    'http://localhost:3000',
-    'https://wyna.in',
-    'https://www.wyna.in',
-    'http://72.61.238.132:3000'
+    process.env.CLIENT_URL || "http://localhost:3000",
+    "http://localhost:3000",
+    "https://wyna.in",
+    "https://www.wyna.in",
+    // "https://wyna.in",
   ],
   credentials: true,
   optionsSuccessStatus: 200,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'Origin']
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization", "Accept", "Origin"],
 };
 
 // Middleware
@@ -48,17 +48,17 @@ app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // Routes
-console.log('Mounting routes...');
+console.log("Mounting routes...");
 app.use("/api/auth", authRoutes);
-console.log('Auth routes mounted');
+console.log("Auth routes mounted");
 app.use("/api/products", productRoutes);
-console.log('Product routes mounted');
+console.log("Product routes mounted");
 app.use("/api/categories", categoryRoutes);
-console.log('Category routes mounted');
+console.log("Category routes mounted");
 app.use("/api/orders", orderRoutes);
-console.log('Order routes mounted');
+console.log("Order routes mounted");
 app.use("/api/guest-orders", guestOrderRoutes);
-console.log('Guest order routes mounted');
+console.log("Guest order routes mounted");
 app.use("/api/newsletter", newsletterRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/wishlist", wishlistRoutes);
@@ -66,7 +66,7 @@ app.use("/api/auth/admin", adminRoutes);
 app.use("/api/upload", uploadRoutes);
 app.use("/api/images", imageRoutes);
 
-// Health check 
+// Health check
 app.get("/api/health", (req, res) => {
   res.json({
     message: "WYNA E-commerce API is running",
@@ -80,9 +80,9 @@ app.use(errorHandler);
 
 // 404 handler
 app.use("*", (req, res) => {
-  res.status(404).json({ 
+  res.status(404).json({
     success: false,
-    message: "Route not found" 
+    message: "Route not found",
   });
 });
 
@@ -92,7 +92,7 @@ const server = app.listen(PORT, () => {
   console.log(
     `Server running in ${
       process.env.NODE_ENV || "development"
-    } mode on port ${PORT}`
+    } mode on port ${PORT}`,
   );
 });
 
