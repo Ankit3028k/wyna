@@ -63,4 +63,37 @@ router.post('/multiple/:type?', upload.array('images', 10), (req, res) => {
   }
 });
 
+// Multiple products upload (specifically for product images)
+router.post('/multiple/products', upload.array('images', 20), (req, res) => {
+  try {
+    if (!req.files || req.files.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: 'No files uploaded'
+      });
+    }
+
+    const imageUrls = req.files.map(file => {
+      const imageUrl = `/uploads/images/products/${file.filename}`;
+      return {
+        url: imageUrl,
+        filename: file.filename
+      };
+    });
+    
+    res.json({
+      success: true,
+      message: `${req.files.length} product images uploaded successfully`,
+      urls: imageUrls
+    });
+  } catch (error) {
+    console.error('Multiple product upload error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error uploading product images',
+      error: error.message
+    });
+  }
+});
+
 module.exports = router;
