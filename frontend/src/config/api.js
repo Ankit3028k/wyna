@@ -6,15 +6,24 @@ console.log('All REACT_APP_ env vars:', Object.keys(process.env).filter(key => k
 console.log('NODE_ENV:', process.env.NODE_ENV);
 
 // Use environment variable or fallback to production URL
-const configuredUrl = process.env.REACT_APP_API_URL || 'https://wyna.in';
+const configuredUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 
-// Sanitize URL: remove old IP addresses, convert http to https, remove ports
-const sanitizedUrl = (configuredUrl || '')
-  .replace(/^http:\/\//, 'https://') // Convert http to https
-  .replace(/:[0-9]+$/, '') // Remove port numbers
-  .replace(/\/$/, ''); // Remove trailing slash
+// Sanitize URL: only convert to https for non-localhost, keep port for localhost
+const sanitizedUrl = (url) => {
+  const configuredUrl = url || '';
+  if (configuredUrl.includes('localhost')) {
+    // Keep localhost as HTTP with port
+    return configuredUrl.replace(/\/$/, ''); // Remove trailing slash only
+  } else {
+    // Convert non-localhost to HTTPS and remove ports
+    return configuredUrl
+      .replace(/^http:\/\//, 'https://') // Convert http to https
+      .replace(/:[0-9]+$/, '') // Remove port numbers
+      .replace(/\/$/, ''); // Remove trailing slash
+  }
+};
 
-const finalUrl = sanitizedUrl || 'https://wyna.in';
+const finalUrl = sanitizedUrl(configuredUrl) || 'http://localhost:5000';
 
 console.log('Configured URL:', configuredUrl);
 console.log('Sanitized URL:', finalUrl);

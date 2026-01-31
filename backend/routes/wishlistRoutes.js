@@ -9,15 +9,15 @@ const router = express.Router();
 // @route   GET /api/wishlist
 // @desc    Get user's wishlist
 // @access  Private
-router.get('/', protect, async (req, res, next) => {
+router.get('/', protect, async (req, res, next) => { 
   try {
     const user = await User.findById(req.user.id).populate({
       path: 'wishlist',
       populate: { path: 'category', select: 'name slug' }
-    });
+    }); 
 
     // Add calculated fields to wishlist products
-    const wishlistWithCalculatedFields = user.wishlist.map(product => ({
+    const wishlistWithCalculatedFields = user.wishlist.map(product => ({ 
       ...product.toObject(),
       finalPrice: product.discountPrice || product.price,
       hasDiscount: !!product.discountPrice,
