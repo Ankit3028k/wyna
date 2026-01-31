@@ -2,6 +2,15 @@ const express = require('express');
 const upload = require('../middleware/upload');
 const router = express.Router();
 
+// Helper function to generate full URLs
+const getFullUrl = (relativePath) => {
+  if (process.env.NODE_ENV === 'production') {
+    const baseUrl = process.env.CLIENT_URL || 'https://www.wyna.in';
+    return `${baseUrl}${relativePath}`;
+  }
+  return relativePath;
+};
+
 // Single image upload
 router.post('/single/:type?', upload.single('image'), (req, res) => {
   try {
@@ -12,7 +21,7 @@ router.post('/single/:type?', upload.single('image'), (req, res) => {
       });
     }
 
-    const imageUrl = `/uploads/images/${req.params.type || 'general'}/${req.file.filename}`;
+    const imageUrl = getFullUrl(`/uploads/images/${req.params.type || 'general'}/${req.file.filename}`);
     
     res.json({
       success: true,
@@ -41,7 +50,7 @@ router.post('/multiple/:type?', upload.array('images', 10), (req, res) => {
     }
 
     const imageUrls = req.files.map(file => {
-      const imageUrl = `/uploads/images/${req.params.type || 'general'}/${file.filename}`;
+      const imageUrl = getFullUrl(`/uploads/images/${req.params.type || 'general'}/${file.filename}`);
       return {
         url: imageUrl,
         filename: file.filename
@@ -74,7 +83,7 @@ router.post('/multiple/products', upload.array('images', 20), (req, res) => {
     }
 
     const imageUrls = req.files.map(file => {
-      const imageUrl = `/uploads/images/products/${file.filename}`;
+      const imageUrl = getFullUrl(`/uploads/images/products/${file.filename}`);
       return {
         url: imageUrl,
         filename: file.filename
