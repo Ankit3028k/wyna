@@ -6,7 +6,7 @@ console.log('All REACT_APP_ env vars:', Object.keys(process.env).filter(key => k
 console.log('NODE_ENV:', process.env.NODE_ENV);
 
 // Use environment variable or fallback to production URL
-const configuredUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+const configuredUrl = process.env.REACT_APP_API_URL || 'https://wyna.in';
 
 // Sanitize URL: only convert to https for non-localhost, keep port for localhost
 const sanitizedUrl = (url) => {
@@ -23,7 +23,7 @@ const sanitizedUrl = (url) => {
   }
 };
 
-const finalUrl = sanitizedUrl(configuredUrl) || 'http://localhost:5000';
+const finalUrl = sanitizedUrl(configuredUrl) || 'https://wyna.in';
 
 console.log('Configured URL:', configuredUrl);
 console.log('Sanitized URL:', finalUrl);

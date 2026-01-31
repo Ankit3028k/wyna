@@ -29,7 +29,7 @@ const corsOptions = {
   origin: [
     process.env.CLIENT_URL || "http://localhost:3000",
     "http://localhost:3000",
-    "http://localhost:5000",
+    "https://wyna.in",
     "https://www.wyna.in",
     "https://wyna.shop",
   ],
