@@ -42,7 +42,7 @@ const Contact = () => {
 
               <div className="contact-item">
                 <h3>Registered Address</h3>
-                {/* <p>4550, Charkhewalan<br />Chawri Bazar, Delhi-110006, India</p> */}
+                <p>Second Floor, 259,<br />Sector 2C, Vasundhara, Ghaziabad, Uttar Pradesh 201012</p>
               </div>
 
               <div className="contact-item">
