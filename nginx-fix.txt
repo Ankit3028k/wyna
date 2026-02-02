@@ -1,0 +1,20 @@
+# Add this location block to your nginx server configuration
+# Place it after the /api/ location block and before the / location block
+
+# Serve uploaded files from backend
+location /uploads/ {
+    proxy_pass http://localhost:5000;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection 'upgrade';
+    proxy_set_header Host $host;
+    proxy_cache_bypass $http_upgrade;
+}
+
+# Alternative: If you want to serve files directly from filesystem
+# Uncomment this and comment out the proxy version above
+# location /uploads/ {
+#     alias /var/www/wyna/backend/uploads/;  # Adjust path to your backend uploads folder
+#     expires 1y;
+#     add_header Cache-Control "public, immutable";
+# }

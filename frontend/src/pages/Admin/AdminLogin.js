@@ -86,7 +86,7 @@ const AdminLogin = () => {
         </form>
 
         <div className="auth-footer">
-          <p>Need an account? <Link to="/admin/register">Register here</Link></p>
+          {/* <p>Need an account? <Link to="/admin/register">Register here</Link></p> */}
           <p><Link to="/">Back to Main Site</Link></p>
         </div>
       </div>

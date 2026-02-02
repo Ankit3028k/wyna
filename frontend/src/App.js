@@ -93,14 +93,14 @@ function App() {
                   </PublicRoute>
                 } 
               />
-              <Route 
+              {/* <Route 
                 path="/admin/register" 
                 element={
                   <PublicRoute>
                     <AdminRegister />
                   </PublicRoute>
                 } 
-              />
+              /> */}
               <Route 
                 path="/admin" 
                 element={

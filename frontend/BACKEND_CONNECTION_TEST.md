@@ -33,7 +33,7 @@ The backend might be running locally on `localhost:5000` instead of `72.61.238.1
 **Fix**: Update frontend to use localhost for development:
 ```javascript
 // In .env.development
-REACT_APP_API_URL=http://localhost:5000
+REACT_APP_API_URL=https://wyna.in
 ```
 
 ### Option 2: Backend Route Issue
@@ -47,7 +47,7 @@ If the backend is running locally, update the frontend configuration:
 
 1. Edit `.env.development`:
 ```
-REACT_APP_API_URL=http://localhost:5000
+REACT_APP_API_URL=https://wyna.in
 ```
 
 2. Restart React app:

@@ -12,7 +12,7 @@ The issue is likely caused by **environment variable precedence** in Create Reac
 
 Since `.env` is gitignored, it likely contains:
 ```
-REACT_APP_API_URL=http://localhost:5000
+REACT_APP_API_URL=https://wyna.in
 ```
 
 This overrides the `.env.development` and `.env.production` files that correctly contain:

@@ -7,6 +7,27 @@ const { ErrorResponse } = require('../middleware/error');
 
 const router = express.Router();
 
+// Helper function to convert image URLs to full URLs in production
+const convertImageUrls = (product) => {
+  if (process.env.NODE_ENV === 'production') {
+    const baseUrl = process.env.CLIENT_URL || 'https://www.wyna.in';
+    
+    // Convert images array
+    if (product.images && Array.isArray(product.images)) {
+      product.images = product.images.map(img => ({
+        ...img,
+        url: img.url && img.url.startsWith('/') ? `${baseUrl}${img.url}` : img.url
+      }));
+    }
+    
+    // Convert single image field
+    if (product.image && product.image.startsWith('/')) {
+      product.image = `${baseUrl}${product.image}`;
+    }
+  }
+  return product;
+};
+
 // @route   GET /api/products
 // @desc    Get all products with filters, search, pagination
 // @access  Public
@@ -124,15 +145,18 @@ router.get('/', [
 
     const total = await Product.countDocuments(query);
 
-    // Add calculated fields
-    const productsWithCalculatedFields = products.map(product => ({
-      ...product,
-      finalPrice: product.discountPrice || product.price,
-      hasDiscount: !!product.discountPrice,
-      discountPercentage: product.discountPrice 
-        ? Math.round(((product.price - product.discountPrice) / product.price) * 100)
-        : 0
-    }));
+    // Add calculated fields and convert image URLs
+    const productsWithCalculatedFields = products.map(product => {
+      const convertedProduct = convertImageUrls(product);
+      return {
+        ...convertedProduct,
+        finalPrice: product.discountPrice || product.price,
+        hasDiscount: !!product.discountPrice,
+        discountPercentage: product.discountPrice 
+          ? Math.round(((product.price - product.discountPrice) / product.price) * 100)
+          : 0
+      };
+    });
 
     res.json({
       success: true,
