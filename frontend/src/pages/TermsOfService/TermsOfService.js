@@ -107,7 +107,7 @@ const TermsOfService = () => {
           <section className="policy-section">
             <h2>13. Governing Law & Jurisdiction</h2>
             <p>These Terms shall be governed by the laws of India.</p>
-            <p>Any dispute arising shall be subject to the exclusive jurisdiction of the courts located in <strong>Bhopal, India</strong>.</p>
+            <p>Any dispute arising shall be subject to the exclusive jurisdiction of the courts located in <strong> India</strong>.</p>
           </section>
 
           <section className="policy-section">
