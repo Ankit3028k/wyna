@@ -187,7 +187,7 @@ const Footer = () => {
           </div>
           <div className="footer-branding">
             <p className="built-with">
-              Built with <span className="heart">❤️</span> for the modern woman
+              Built with <span className="heart">❤️</span> for the modern woman <a href="https://www.google.com/search?q=fitscalez&rlz=1C1ONGR_enIN1140IN1140&oq=fitscalez+&gs_lcrp=EgZjaHJvbWUyBggAEEUYOTIKCAEQABiABBiiBDIHCAIQABjvBTIGCAMQRRg8MgYIBBBFGEEyBggFEEUYQTIGCAYQRRg8MgYIBxBFGEHSAQg0MjQzajBqN6gCCLACAfEFJhuv0JnsXss&sourceid=chrome&ie=UTF-8" target="_blank" rel="noopener noreferrer">Fitscalez</a>
             </p>
             <p className="under-shrinaya">
               Under Shrinaya Parampara (Since 2025)

@@ -174,10 +174,10 @@ const Home = () => {
                 <div className="card-body">
                   <h3 className="card-title">{category.name}</h3>
                   <p className="card-text">{category.description}</p>
-                  <p className="card-count">
+                  {/* <p className="card-count">
                     {category.count} {category.count === 1 ? "saree" : "sarees"}{" "}
                     available
-                  </p>
+                  </p> */}
                 </div>
               </div>
             ))}
@@ -186,7 +186,7 @@ const Home = () => {
       </section>
 
       {/* Featured Products Section */}
-      <section className="featured-products section-separator-wave animate-fade-in-up">
+      {/* <section className="featured-products section-separator-wave animate-fade-in-up">
         <div className="container">
           <h2 className="section-title">Series: Handcrafted</h2>
           <p className="section-subtitle">
@@ -208,7 +208,7 @@ const Home = () => {
                     {product.exclusive && (
                       <span className="badge badge-exclusive">Exclusive</span>
                     )}
-                    {/* <span className="badge badge-series">{product.series}</span> */}
+                    {/* <span className="badge badge-series">{product.series}</span> 
                   </div>
                 </div>
                 <div className="card-body">
@@ -233,7 +233,7 @@ const Home = () => {
             </Link>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Features Section */}
       <section className="features animate-fade-in-up">
@@ -437,19 +437,20 @@ const Home = () => {
         <div className="container">
           <div className="newsletter-content">
             <h2>Embrace Your Aura</h2>
-            <p>
+           <p style={{ color: "#fff" }}>
+
               Receive exclusive updates about new series and limited edition
               collections
             </p>
             <form className="newsletter-form">
-              <input
+              {/* <input
                 type="email"
                 placeholder="Enter your email address"
                 className="newsletter-input"
-              />
-              <button type="submit" className="btn btn-primary">
+              /> */}
+              <a href="https://whatsapp.com/channel/0029VbBwpyXHLHQUDi6dea1Y" target="_blank" rel="noopener noreferrer" className="btn btn-primary">
                 Join WYNA
-              </button>
+              </a>
             </form>
           </div>
         </div>
