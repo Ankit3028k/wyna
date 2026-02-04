@@ -106,7 +106,9 @@ const Home = () => {
           name: category.name,
           image: category.image || "/Asset/product/placeholder.jpg",
           description: category.description,
-          count: 0 // Would need to fetch product counts per category
+          count: 0, // Would need to fetch product counts per category
+          comingSoon: category.comingSoon || false,
+          slug: category.slug || category.name.toLowerCase()
         }));
         
         setFeaturedProducts(transformedProducts);
@@ -163,12 +165,18 @@ const Home = () => {
                 <div className="category-image">
                   <img src={category.image} alt={category.name} />
                   <div className="category-overlay">
-                    <Link
-                      to={`/categories/${category.name.toLowerCase()}`}
-                      className="btn btn-primary"
-                    >
-                      View All
-                    </Link>
+                    {category.comingSoon ? (
+                      <span className="btn btn-primary coming-soon-btn">
+                        Coming Soon
+                      </span>
+                    ) : (
+                      <Link
+                        to={`/categories/${category.slug}`}
+                        className="btn btn-primary"
+                      >
+                        View All
+                      </Link>
+                    )}
                   </div>
                 </div>
                 <div className="card-body">

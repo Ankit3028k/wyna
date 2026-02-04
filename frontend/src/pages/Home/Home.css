@@ -2211,3 +2211,46 @@
     color: #000;
   }
 }
+
+/* Coming Soon Button Styles */
+.coming-soon-btn {
+  background: linear-gradient(
+    135deg,
+    var(--wyna-gold) 0%,
+    var(--wyna-orange) 100%
+  ) !important;
+  color: var(--wyna-red) !important;
+  border: 2px solid var(--wyna-gold) !important;
+  cursor: not-allowed !important;
+  opacity: 0.9;
+  font-weight: 600;
+  position: relative;
+  overflow: hidden;
+}
+
+.coming-soon-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+.coming-soon-btn:hover {
+  transform: none !important;
+  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4) !important;
+  opacity: 1;
+}
