@@ -19,6 +19,7 @@ const AddCategory = () => {
     bannerImage: "",
     featured: false,
     active: true,
+    comingSoon: false,
     metaTitle: "",
     metaDescription: "",
     keywords: ""
@@ -317,6 +318,16 @@ const AddCategory = () => {
                   onChange={handleChange}
                 />
                 Active
+              </label>
+              
+              <label className="checkbox-label">
+                <input
+                  type="checkbox"
+                  name="comingSoon"
+                  checked={formData.comingSoon}
+                  onChange={handleChange}
+                />
+                Coming Soon
               </label>
             </div>
 

@@ -24,6 +24,7 @@ const EditCategory = () => {
     sortOrder: "",
     featured: false,
     active: true,
+    comingSoon: false,
     metaTitle: "",
     metaDescription: "",
     keywords: ""
@@ -57,6 +58,7 @@ const EditCategory = () => {
             sortOrder: category.sortOrder || "",
             featured: category.featured || false,
             active: category.active || true,
+            comingSoon: category.comingSoon || false,
             metaTitle: category.metaTitle || "",
             metaDescription: category.metaDescription || "",
             keywords: category.keywords?.join(", ") || ""
@@ -444,6 +446,16 @@ const EditCategory = () => {
                   onChange={handleChange}
                 />
                 Active
+              </label>
+              
+              <label className="checkbox-label">
+                <input
+                  type="checkbox"
+                  name="comingSoon"
+                  checked={formData.comingSoon}
+                  onChange={handleChange}
+                />
+                Coming Soon
               </label>
             </div>
 
