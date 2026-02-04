@@ -113,8 +113,10 @@ const ProductDetail = () => {
                 cart[existingItemIndex].quantity += qty;
               } else {
                 // Add new item with selected quantity
+                const effectivePrice = product.discountPrice && product.discountPrice < product.price ? product.discountPrice : product.price;
                 cart.push({ 
                   ...product, 
+                  price: effectivePrice,
                   image: product.images && product.images.length > 0 
                     ? `${API_CONFIG.BASE_URL}${product.images[0].url}` 
                     : "/images/placeholder.jpg",
