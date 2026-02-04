@@ -356,7 +356,7 @@ const AdminDashboard = () => {
     <div className="admin-dashboard">
       <div className="admin-sidebar">
         <div className="admin-logo">
-          <img src="/logo.jpeg" alt="WYNA" />
+          <img src="/Asset/logo.jpeg" alt="WYNA" />
           <h2>WYNA Admin</h2>
         </div>
         <nav className="admin-nav">

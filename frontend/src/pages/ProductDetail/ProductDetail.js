@@ -60,7 +60,19 @@ const ProductDetail = () => {
         {/* PRODUCT INFO */}
         <div className="info-section">
           <h1>{product.name}</h1>
-          <p className="price">₹{product.price.toLocaleString()}</p>
+          <div className="price-section">
+            {product.discountPrice && product.discountPrice < product.price ? (
+              <div className="price-container">
+                <span className="original-price">₹{product.price.toLocaleString()}</span>
+                <span className="discount-price">₹{product.discountPrice.toLocaleString()}</span>
+                <span className="discount-percentage">
+                  {Math.round(((product.price - product.discountPrice) / product.price) * 100)}% OFF
+                </span>
+              </div>
+            ) : (
+              <p className="price">₹{product.price.toLocaleString()}</p>
+            )}
+          </div>
 
           <p className="description">{product.description}</p>
 
@@ -82,7 +94,9 @@ const ProductDetail = () => {
           {/* TOTAL */}
           <div className="total-box">
             <span>Total:</span>
-            <strong>₹{(product.price * qty).toLocaleString()}</strong>
+            <strong>
+              ₹{((product.discountPrice && product.discountPrice < product.price ? product.discountPrice : product.price) * qty).toLocaleString()}
+            </strong>
           </div>
 
           <button
