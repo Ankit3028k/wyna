@@ -24,7 +24,7 @@ const Header = () => {
           </Link>
 
           {/* Search Bar */}
-          <div
+          {/* <div
             className={`search-container ${searchOpen ? "search-open" : ""}`}
           >
             <form onSubmit={handleSearch} className="search-form">
@@ -39,14 +39,24 @@ const Header = () => {
                 <i className="fas fa-search"></i>
               </button>
             </form>
-          </div>
+          </div> */}
 
-          <button
+          {/* <button
             className="search-toggle"
             onClick={() => setSearchOpen(!searchOpen)}
           >
             <i className="fas fa-search"></i>
-          </button>
+          </button> */}
+
+          {/* Cart Button - Always visible on mobile */}
+          <Link
+            to="/cart"
+            className="cart-link mobile-cart-btn"
+          >
+            <span className="cart-icon">
+              <FaShoppingCart />
+            </span>
+          </Link>
 
           <button
             className="mobile-menu-btn"
@@ -60,7 +70,8 @@ const Header = () => {
           <nav className={`nav ${mobileMenuOpen ? "mobile-open" : ""}`}>
             <div className="nav-item products-dropdown">
               <Link to="/products" onClick={() => setMobileMenuOpen(false)}>
-                Products <i className="fas fa-chevron-down"></i>
+                Products 
+                {/* <i className="fas fa-chevron-down"></i> */}
               </Link>
             </div>
 
@@ -84,16 +95,6 @@ const Header = () => {
               onClick={() => setMobileMenuOpen(false)}
             >
               Contact
-            </Link>
-            <Link
-              to="/cart"
-              className="nav-item cart-link"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              <span className="cart-icon">
-                <FaShoppingCart />
-              </span>{" "}
-              Cart
             </Link>
           </nav>
         </div>
