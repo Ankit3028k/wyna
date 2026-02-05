@@ -85,7 +85,9 @@ const Checkout = () => {
     }
   };
 
-  const finalTotal = total + total * 0.18;
+  const finalTotal = total
+  //  + total * 0.18
+  ;
 
   return (
     <div className="checkout-page">
@@ -264,7 +266,9 @@ const Checkout = () => {
             <div className="summary-calculation">
               <div className="calc-row">
                 <span>Subtotal</span>
-                <span>₹{total.toLocaleString()}</span>
+                <span>₹{total
+                // .toLocaleString()
+                }</span>
               </div>
 
               <div className="calc-row">
@@ -272,16 +276,18 @@ const Checkout = () => {
                 <span>₹0 (Free)</span>
               </div>
 
-              <div className="calc-row">
+              {/* <div className="calc-row">
                 <span>Tax (18%)</span>
                 <span>₹{(total * 0.18).toFixed(2)}</span>
-              </div>
+              </div> */}
 
               <div className="summary-divider"></div>
 
               <div className="calc-row total">
                 <span>Total Amount</span>
-                <span>₹{finalTotal.toFixed(2)}</span>
+                <span>₹{finalTotal
+                // .toFixed(2)
+                }</span>
               </div>
             </div>
 

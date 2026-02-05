@@ -75,7 +75,9 @@ router.post('/', protect, [
     // Free shipping for orders over ₹2000
     const shippingCost = subtotal >= 2000 ? 0 : 150;
     
-    const totalAmount = subtotal + tax + shippingCost;
+    const totalAmount = subtotal
+    //  + tax + shippingCost
+     ;
 
     // Create order
     const order = new Order({

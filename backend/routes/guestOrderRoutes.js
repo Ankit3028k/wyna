@@ -81,7 +81,9 @@ router.post('/', [
     // Free shipping for orders over ₹2000
     const shippingCost = subtotal >= 2000 ? 0 : 150;
     
-    const totalAmount = subtotal + tax + shippingCost;
+    const totalAmount = subtotal 
+    // + tax + shippingCost
+    ;
 
     // Generate order number
     const orderNumber = `WYNA-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
@@ -94,9 +96,9 @@ router.post('/', [
         phone: customerInfo.phone,
         street: customerInfo.address,
         city: customerInfo.city,
-        state: 'Unknown',
+        state: customerInfo.state,
         zipCode: customerInfo.postalCode,
-        country: 'India'
+        country: customerInfo.country
       },
       items: orderItems,
       paymentMethod,

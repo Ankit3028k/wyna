@@ -7,6 +7,28 @@ const { ErrorResponse } = require('../middleware/error');
 
 console.log('Product routes loaded');
 
+// Custom validator for image URLs (accepts both full URLs and relative upload paths)
+const isValidImageUrl = (value) => {
+  if (!value) return true; // Optional field
+  
+  // Accept full URLs
+  if (value.startsWith('http://') || value.startsWith('https://')) {
+    try {
+      new URL(value);
+      return true;
+    } catch {
+      return false;
+    }
+  }
+  
+  // Accept relative upload paths
+  if (value.startsWith('/uploads/')) {
+    return true;
+  }
+  
+  return false;
+};
+
 const router = express.Router();
 
 // Log all requests to product routes
@@ -99,12 +121,16 @@ router.post('/', adminAuth, [
   body('description').trim().isLength({ min: 10 }).withMessage('Description must be at least 10 characters'),
   body('price').isNumeric().withMessage('Price must be a number'),
   body('category').isMongoId().withMessage('Valid category ID is required'),
-  body('stock').isNumeric().withMessage('Stock must be a number')
+  body('stock').isNumeric().withMessage('Stock must be a number'),
+  body('images').optional().isArray().withMessage('Images must be an array'),
+  body('images.*.url').optional().custom(isValidImageUrl).withMessage('Each image must have a valid URL (full URL or /uploads/ path)'),
+  body('images.*.alt').optional().isString().withMessage('Image alt text must be a string'),
+  body('images.*.isPrimary').optional().isBoolean().withMessage('isPrimary must be a boolean')
 ], async (req, res) => {
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      return res.status(400).json({ success: false, message: 'Validation failed', errors: errors.array() });
     }
 
     // Process images to match expected format
@@ -132,12 +158,16 @@ router.post('/', adminAuth, [
     const product = new Product(processedBody);
     const savedProduct = await product.save();
 
-    res.status(201).json(savedProduct);
+    res.status(201).json({ 
+      success: true, 
+      message: 'Product created successfully',
+      data: savedProduct 
+    });
   } catch (error) {
     if (error.code === 11000) {
-      res.status(400).json({ message: 'Product with this name already exists' });
+      res.status(400).json({ success: false, message: 'Product with this name already exists' });
     } else {
-      res.status(500).json({ message: 'Server error', error: error.message });
+      res.status(500).json({ success: false, message: 'Server error', error: error.message });
     }
   }
 });
@@ -148,7 +178,11 @@ router.put('/:id', adminAuth, [
   body('description').optional().trim().isLength({ min: 10 }).withMessage('Description must be at least 10 characters'),
   body('price').optional().isNumeric().withMessage('Price must be a number'),
   body('category').optional().isMongoId().withMessage('Valid category ID is required'),
-  body('stock').optional().isNumeric().withMessage('Stock must be a number')
+  body('stock').optional().isNumeric().withMessage('Stock must be a number'),
+  body('images').optional().isArray().withMessage('Images must be an array'),
+  body('images.*.url').optional().custom(isValidImageUrl).withMessage('Each image must have a valid URL (full URL or /uploads/ path)'),
+  body('images.*.alt').optional().isString().withMessage('Image alt text must be a string'),
+  body('images.*.isPrimary').optional().isBoolean().withMessage('isPrimary must be a boolean')
 ], async (req, res) => {
   console.log('PUT route hit, params:', req.params);
   console.log('PUT route hit, body:', req.body);
@@ -157,7 +191,7 @@ router.put('/:id', adminAuth, [
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       console.log('Validation errors:', errors.array());
-      return res.status(400).json({ errors: errors.array() });
+      return res.status(400).json({ success: false, message: 'Validation failed', errors: errors.array() });
     }
 
     // Process images to match expected format

@@ -130,15 +130,17 @@ const Cart = () => {
             </div>
 
             <div className="summary-row">
-              <span>Tax (18%)</span>
-              <span>₹{(total * 0.18).toFixed(2)}</span>
+              {/* <span>Tax (18%)</span>
+              <span>₹{(total * 0.18).toFixed(2)}</span> */}
             </div>
 
             <div className="summary-divider"></div>
 
             <div className="summary-row total">
               <span>Total</span>
-              <span>₹{(total + total * 0.18).toFixed(2)}</span>
+              <span>₹{(total
+                //  + total * 0.18
+                ).toFixed(2)}</span>
             </div>
 
             <button
