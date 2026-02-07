@@ -255,7 +255,13 @@ router.post('/', adminAuth, [
   body('stock').isInt({ min: 0 }).withMessage('Stock must be a non-negative integer'),
   body('sku').optional().toUpperCase().trim(),
   body('images').isArray({ min: 1 }).withMessage('At least one image is required'),
-  body('images.*.url').isURL().withMessage('Each image must have a valid URL')
+  body('images.*.url').custom((value) => {
+    if (!value) return false;
+    // Accept both full URLs and relative paths starting with /
+    const isFullUrl = value.startsWith('http://') || value.startsWith('https://');
+    const isRelativePath = value.startsWith('/');
+    return isFullUrl || isRelativePath;
+  }).withMessage('Each image must have a valid URL or relative path')
 ], async (req, res, next) => {
   try {
     const errors = validationResult(req);
