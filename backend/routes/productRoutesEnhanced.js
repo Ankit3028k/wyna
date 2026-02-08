@@ -14,15 +14,39 @@ const convertImageUrls = (product) => {
     
     // Convert images array
     if (product.images && Array.isArray(product.images)) {
-      product.images = product.images.map(img => ({
-        ...img,
-        url: img.url && img.url.startsWith('/') ? `${baseUrl}${img.url}` : img.url
-      }));
+      product.images = product.images.map(img => {
+        if (img.url) {
+          // Only convert if it's a relative path starting with /
+          if (img.url.startsWith('/')) {
+            return {
+              ...img,
+              url: `${baseUrl}${img.url}`
+            };
+          }
+          // If it's already a full URL, check if it's malformed and fix it
+          else if (img.url.includes('wyna.inhttps//') || img.url.includes('wyna.inhttp//')) {
+            // Fix malformed URLs by extracting the correct part
+            const correctedUrl = img.url.replace(/wyna\.inhttps?\/\//, 'wyna.in/');
+            return {
+              ...img,
+              url: correctedUrl.startsWith('http') ? correctedUrl : `https://${correctedUrl}`
+            };
+          }
+        }
+        return img;
+      });
     }
     
     // Convert single image field
-    if (product.image && product.image.startsWith('/')) {
-      product.image = `${baseUrl}${product.image}`;
+    if (product.image) {
+      if (product.image.startsWith('/')) {
+        product.image = `${baseUrl}${product.image}`;
+      }
+      // Fix malformed single image URL
+      else if (product.image.includes('wyna.inhttps//') || product.image.includes('wyna.inhttp//')) {
+        const correctedUrl = product.image.replace(/wyna\.inhttps?\/\//, 'wyna.in/');
+        product.image = correctedUrl.startsWith('http') ? correctedUrl : `https://${correctedUrl}`;
+      }
     }
   }
   return product;
