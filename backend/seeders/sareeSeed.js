@@ -246,10 +246,10 @@ const seedData = async () => {
       ];
       
       // Generate SKU
-      const categoryPrefix = product.category === banarasiCategory._id ? 'BAN' :
-                           product.category === kanjeevaramCategory._id ? 'KAN' : 'CHA';
-      const randomNumber = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
-      product.sku = `${categoryPrefix}${randomNumber}`;
+      // const categoryPrefix = product.category === banarasiCategory._id ? 'BAN' :
+      //                      product.category === kanjeevaramCategory._id ? 'KAN' : 'CHA';
+      // const randomNumber = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+      // product.sku = `${categoryPrefix}${randomNumber}`;
     });
     
     // Insert products one by one to ensure slug generation

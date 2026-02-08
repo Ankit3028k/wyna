@@ -242,7 +242,7 @@ router.get('/slug/:slug', async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-});
+}); // <--- Added missing closing brace
 
 // @route   POST /api/products
 // @desc    Create new product
@@ -253,10 +253,9 @@ router.post('/', adminAuth, [
   body('price').isNumeric().withMessage('Price must be a number').isFloat({ min: 0 }).withMessage('Price must be positive'),
   body('category').isMongoId().withMessage('Valid category ID is required'),
   body('stock').isInt({ min: 0 }).withMessage('Stock must be a non-negative integer'),
-  body('sku').optional().toUpperCase().trim(),
   body('images').isArray({ min: 1 }).withMessage('At least one image is required'),
   body('images.*.url').custom((value) => {
-    if (!value) return false;
+    if (!value) return true; // Allow optional URL field - array validation ensures at least one image
     // Accept both full URLs and relative paths starting with /
     const isFullUrl = value.startsWith('http://') || value.startsWith('https://');
     const isRelativePath = value.startsWith('/');
@@ -276,13 +275,6 @@ router.post('/', adminAuth, [
     const category = await Category.findById(req.body.category);
     if (!category) {
       return next(new ErrorResponse('Category not found', 404));
-    }
-
-    // Generate SKU if not provided
-    if (!req.body.sku) {
-      const categoryPrefix = category.name.substring(0, 3).toUpperCase();
-      const randomNumber = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
-      req.body.sku = `${categoryPrefix}${randomNumber}`;
     }
 
     // Prepare product data with proper image formatting
@@ -317,9 +309,6 @@ router.post('/', adminAuth, [
       data: savedProduct
     });
   } catch (error) {
-    if (error.code === 11000) {
-      return next(new ErrorResponse('Product with this SKU already exists', 400));
-    }
     next(error);
   }
 });
@@ -327,7 +316,20 @@ router.post('/', adminAuth, [
 // @route   PUT /api/products/:id
 // @desc    Update product
 // @access  Private (Admin only)
-router.put('/:id', adminAuth, async (req, res, next) => {
+router.put('/:id', adminAuth, [
+  body('name').optional().trim().isLength({ min: 3, max: 100 }).withMessage('Product name must be between 3 and 100 characters'),
+  body('description').optional().trim().isLength({ min: 10, max: 1000 }).withMessage('Description must be between 10 and 1000 characters'),
+  body('price').optional().isNumeric().withMessage('Price must be a number').isFloat({ min: 0 }).withMessage('Price must be positive'),
+  body('category').optional().isMongoId().withMessage('Valid category ID is required'),
+  body('stock').optional().isInt({ min: 0 }).withMessage('Stock must be a non-negative integer'),
+  body('images').optional().isArray().withMessage('Images must be an array'),
+  body('images.*.url').optional().custom((value) => {
+    if (!value) return true; // Optional - skip if not provided
+    const isFullUrl = value.startsWith('http://') || value.startsWith('https://');
+    const isRelativePath = value.startsWith('/');
+    return isFullUrl || isRelativePath;
+  }).withMessage('Each image must have a valid URL or relative path')
+], async (req, res, next) => {
   try {
     let product = await Product.findById(req.params.id);
 

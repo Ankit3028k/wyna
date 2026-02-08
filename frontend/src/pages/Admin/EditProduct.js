@@ -196,11 +196,8 @@ const EditProduct = () => {
     try {
       const token = localStorage.getItem("adminToken");
       
-      // Upload new images if any
-      let uploadedImages = [];
-      if (imageFiles.length > 0) {
-        uploadedImages = await uploadImages();
-      }
+      // Upload images first (this also handles selected server images)
+      const uploadedImages = await uploadImages();
       
       // Prepare product data
       const productData = {

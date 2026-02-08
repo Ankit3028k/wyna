@@ -57,11 +57,7 @@ const productSchema = new mongoose.Schema(
       min: 0,
       default: 0,
     },
-    sku: {
-      type: String,
-      unique: true,
-      uppercase: true,
-    },
+   
     features: [
       {
         type: String,
@@ -114,6 +110,11 @@ const productSchema = new mongoose.Schema(
       unique: true,
       lowercase: true,
     },
+    sku: {
+      type: String,
+      unique: true,
+      sparse: true, // Allows multiple null values
+    },
     inStock: {
       type: Boolean,
       default: true,
@@ -150,7 +151,7 @@ const productSchema = new mongoose.Schema(
     status: {
       type: String,
       enum: ['draft', 'published', 'archived'],
-      default: 'draft',
+      default: 'published',
     },
   },
   {
@@ -159,13 +160,32 @@ const productSchema = new mongoose.Schema(
 );
 
 // Create slug from name before saving
-productSchema.pre("save", function (next) {
+productSchema.pre("save", async function (next) {
   if (this.isModified("name") || !this.slug) {
-    this.slug = this.name
+    let baseSlug = this.name
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/(^-|-$)/g, "");
+    
+    let slug = baseSlug;
+    let counter = 1;
+    
+    // Check if slug exists and make it unique
+    while (await this.constructor.findOne({ slug, _id: { $ne: this._id } })) {
+      slug = `${baseSlug}-${counter}`;
+      counter++;
+    }
+    
+    this.slug = slug;
   }
+
+  // Generate SKU if not provided
+  if (!this.sku) {
+    const timestamp = Date.now().toString(36);
+    const random = Math.random().toString(36).substring(2, 5);
+    this.sku = `SKU-${timestamp}-${random}`.toUpperCase();
+  }
+
   next();
 });
 
