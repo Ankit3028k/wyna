@@ -20,8 +20,8 @@ const sendOrderConfirmationEmail = async (order, user) => {
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f8f9fa;">
         <div style="background-color: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
           <div style="text-align: center; margin-bottom: 30px;">
-            <h1 style="color: #d4af37; margin: 0;">WYNA Saree</h1>
-            <p style="color: #666; margin: 5px 0;">Exquisite Saree for Every Occasion</p>
+            <h1 style="color: #d4af37; margin: 0;">WYNA India</h1>
+            <p style="color: #666; margin: 5px 0;">Wave your New Aura</p>
           </div>
           
           <h2 style="color: #333; border-bottom: 2px solid #d4af37; padding-bottom: 10px;">Order Confirmation</h2>
@@ -34,7 +34,7 @@ const sendOrderConfirmationEmail = async (order, user) => {
             <p><strong>Order Number:</strong> ${order.orderNumber}</p>
             <p><strong>Order Date:</strong> ${new Date(order.createdAt).toLocaleDateString()}</p>
             <p><strong>Payment Method:</strong> ${order.paymentMethod.toUpperCase()}</p>
-            <p><strong>Order Status:</strong> <span style="color: #28a745; font-weight: bold;">${order.orderStatus.toUpperCase()}</span></p>
+            
           </div>
           
           <h3 style="color: #333;">Shipping Address</h3>
@@ -75,8 +75,7 @@ const sendOrderConfirmationEmail = async (order, user) => {
               <span>₹${order.subtotal.toFixed(2)}</span>
             </div>
             <div style="display: flex; justify-content: space-between; margin: 5px 0;">
-              <span>Tax (18%):</span>
-              <span>₹${order.tax.toFixed(2)}</span>
+
             </div>
             <div style="display: flex; justify-content: space-between; margin: 5px 0;">
               <span>Shipping:</span>
@@ -133,8 +132,8 @@ const sendOrderStatusUpdateEmail = async (order, user) => {
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f8f9fa;">
         <div style="background-color: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
           <div style="text-align: center; margin-bottom: 30px;">
-            <h1 style="color: linear-gradient(135deg, #8b0000 0%, #b22222 100%); margin: 0;">WYNA Saree</h1>
-            <p style="color: #666; margin: 5px 0;">Exquisite Saree for Every Occasion</p>
+            <h1 style="color: linear-gradient(135deg, #8b0000 0%, #b22222 100%); margin: 0;">WYNA </h1>
+            <p style="color: #666; margin: 5px 0;">Exquisite  for Every Occasion</p>
           </div>
           
           <h2 style="color: #333; border-bottom: 2px solid #d4af37; padding-bottom: 10px;">Order Status Update</h2>
@@ -158,14 +157,14 @@ const sendOrderStatusUpdateEmail = async (order, user) => {
           ` : ''}
           
           <div style="text-align: center; margin: 30px 0;">
-            <p style="color: #666;">Thank you for choosing WYNA Saree!</p>
+            <p style="color: #666;">Thank you for choosing WYNA !</p>
             <p style="color: #666;">For any questions, please contact our customer support.</p>
           </div>
           
           <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd;">
             <p style="color: #666; font-size: 12px;">
               This is an automated email. Please do not reply to this message.<br>
-              © 2024 WYNA . All rights reserved.
+              © 2024 WYNA . All rights reserved. created by Fitscalez
             </p>
           </div>
         </div>
