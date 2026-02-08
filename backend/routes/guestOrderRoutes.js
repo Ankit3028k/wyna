@@ -3,6 +3,7 @@ const { body, validationResult } = require('express-validator');
 const Order = require('../models/Order');
 const Product = require('../models/Product');
 const { ErrorResponse } = require('../middleware/error');
+const { sendOrderConfirmationEmail } = require('../utils/emailService');
 
 const router = express.Router();
 
@@ -15,6 +16,7 @@ router.post('/', [
   body('customerInfo.phone').isMobilePhone('en-IN').withMessage('Valid phone number required'),
   body('customerInfo.address').trim().notEmpty().withMessage('Address is required'),
   body('customerInfo.city').trim().notEmpty().withMessage('City is required'),
+  body('customerInfo.state').optional().trim().notEmpty().withMessage('State cannot be empty if provided'),
   body('customerInfo.postalCode').trim().matches(/^\d{6}$/).withMessage('Valid 6-digit PIN code required'),
   body('items').isArray({ min: 1 }).withMessage('Order must have at least one item'),
   body('paymentMethod').isIn(['cod', 'card', 'upi', 'netbanking']).withMessage('Invalid payment method')
@@ -115,6 +117,18 @@ router.post('/', [
     await savedOrder.populate([
       { path: 'items.product', select: 'name slug images' }
     ]);
+
+    // Send order confirmation email for guest orders
+    try {
+      const guestUser = {
+        name: customerInfo.name,
+        email: customerInfo.email
+      };
+      await sendOrderConfirmationEmail(savedOrder, guestUser);
+    } catch (emailError) {
+      console.error('Failed to send guest order confirmation email:', emailError);
+      // Don't fail the order creation if email fails
+    }
 
     res.status(201).json({
       success: true,

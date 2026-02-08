@@ -6,6 +6,7 @@ const User = require('../models/User');
 const { protect, authorize } = require('../middleware/auth');
 const adminAuth = require('../middleware/adminAuth');
 const { ErrorResponse } = require('../middleware/error');
+const { sendOrderConfirmationEmail, sendOrderStatusUpdateEmail } = require('../utils/emailService');
 
 const router = express.Router();
 
@@ -20,7 +21,7 @@ router.post('/', protect, [
   body('shippingAddress.phone').isMobilePhone('en-IN').withMessage('Valid phone number required'),
   body('shippingAddress.street').trim().notEmpty().withMessage('Street address is required'),
   body('shippingAddress.city').trim().notEmpty().withMessage('City is required'),
-  body('shippingAddress.state').trim().notEmpty().withMessage('State is required'),
+  body('shippingAddress.state').optional().trim().notEmpty().withMessage('State cannot be empty if provided'),
   body('shippingAddress.zipCode').trim().matches(/^\d{6}$/).withMessage('Valid 6-digit ZIP code required'),
   body('paymentMethod').isIn(['cod', 'online', 'upi', 'card']).withMessage('Invalid payment method')
 ], async (req, res, next) => {
@@ -100,6 +101,14 @@ router.post('/', protect, [
       { path: 'user', select: 'name email phone' },
       { path: 'items.product', select: 'name slug images' }
     ]);
+
+    // Send order confirmation email
+    try {
+      await sendOrderConfirmationEmail(savedOrder, savedOrder.user);
+    } catch (emailError) {
+      console.error('Failed to send order confirmation email:', emailError);
+      // Don't fail the order creation if email fails
+    }
 
     res.status(201).json({
       success: true,
@@ -302,6 +311,14 @@ router.put('/admin/:id/status', adminAuth, [
       updates,
       { new: true }
     ).populate('user', 'name email phone');
+
+    // Send order status update email
+    try {
+      await sendOrderStatusUpdateEmail(updatedOrder, updatedOrder.user);
+    } catch (emailError) {
+      console.error('Failed to send order status update email:', emailError);
+      // Don't fail the status update if email fails
+    }
 
     res.json({
       success: true,
