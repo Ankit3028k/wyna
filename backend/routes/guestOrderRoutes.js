@@ -36,6 +36,8 @@ router.post('/', [
     let subtotal = 0;
     const orderItems = [];
 
+    const shouldAdjustInventoryNow = paymentMethod === 'cod';
+
     for (const item of items) {
       // Since we're storing product data in localStorage, we need to validate against database
       const product = await Product.findById(item._id || item.product);
@@ -63,17 +65,14 @@ router.post('/', [
 
       subtotal += itemTotal;
 
-      // Update product stock
-      if (product.stock >= (item.quantity || 1)) {
-        product.stock -= (item.quantity || 1);
-        product.popularity += (item.quantity || 1);
-        await product.save();
-      } else {
-        // For development/testing: Allow order but log warning
-        console.warn(`Order placed for ${product.name} despite low stock. Available: ${product.stock}, Requested: ${item.quantity || 1}`);
-        // Optionally reduce stock to negative value to track overselling
-        // product.stock -= (item.quantity || 1);
-        // await product.save();
+      if (shouldAdjustInventoryNow) {
+        if (product.stock >= (item.quantity || 1)) {
+          product.stock -= (item.quantity || 1);
+          product.popularity += (item.quantity || 1);
+          await product.save();
+        } else {
+          console.warn(`Order placed for ${product.name} despite low stock. Available: ${product.stock}, Requested: ${item.quantity || 1}`);
+        }
       }
     }
 
@@ -93,6 +92,7 @@ router.post('/', [
     // Create guest order
     const order = new Order({
       orderNumber,
+      customerEmail: customerInfo.email,
       shippingAddress: {
         fullName: customerInfo.name,
         phone: customerInfo.phone,
@@ -119,15 +119,16 @@ router.post('/', [
     ]);
 
     // Send order confirmation email for guest orders
-    try {
-      const guestUser = {
-        name: customerInfo.name,
-        email: customerInfo.email
-      };
-      await sendOrderConfirmationEmail(savedOrder, guestUser);
-    } catch (emailError) {
-      console.error('Failed to send guest order confirmation email:', emailError);
-      // Don't fail the order creation if email fails
+    if (paymentMethod === 'cod') {
+      try {
+        const guestUser = {
+          name: customerInfo.name,
+          email: customerInfo.email
+        };
+        await sendOrderConfirmationEmail(savedOrder, guestUser);
+      } catch (emailError) {
+        console.error('Failed to send guest order confirmation email:', emailError);
+      }
     }
 
     res.status(201).json({

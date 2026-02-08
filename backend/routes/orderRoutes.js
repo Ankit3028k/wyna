@@ -40,6 +40,8 @@ router.post('/', protect, [
     let subtotal = 0;
     const orderItems = [];
 
+    const shouldAdjustInventoryNow = paymentMethod === 'cod';
+
     for (const item of items) {
       const product = await Product.findById(item.product);
       
@@ -64,10 +66,11 @@ router.post('/', protect, [
 
       subtotal += itemTotal;
 
-      // Update product stock
-      product.stock -= item.quantity;
-      product.popularity += item.quantity;
-      await product.save();
+      if (shouldAdjustInventoryNow) {
+        product.stock -= item.quantity;
+        product.popularity += item.quantity;
+        await product.save();
+      }
     }
 
     // Calculate tax (18%)
@@ -103,11 +106,12 @@ router.post('/', protect, [
     ]);
 
     // Send order confirmation email
-    try {
-      await sendOrderConfirmationEmail(savedOrder, savedOrder.user);
-    } catch (emailError) {
-      console.error('Failed to send order confirmation email:', emailError);
-      // Don't fail the order creation if email fails
+    if (paymentMethod === 'cod') {
+      try {
+        await sendOrderConfirmationEmail(savedOrder, savedOrder.user);
+      } catch (emailError) {
+        console.error('Failed to send order confirmation email:', emailError);
+      }
     }
 
     res.status(201).json({

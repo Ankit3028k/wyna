@@ -12,6 +12,7 @@ const productRoutes = require("./routes/productRoutesEnhanced");
 const categoryRoutes = require("./routes/categoryRoutes");
 const orderRoutes = require("./routes/orderRoutes");
 const guestOrderRoutes = require("./routes/guestOrderRoutes");
+const paymentRoutes = require("./routes/paymentRoutes");
 const newsletterRoutes = require("./routes/newsletterRoutes");
 const contactRoutes = require("./routes/contactRoutes");
 const wishlistRoutes = require("./routes/wishlistRoutes");
@@ -41,7 +42,14 @@ const corsOptions = {
 
 // Middleware
 app.use(cors(corsOptions));
-app.use(express.json({ limit: "10mb" }));
+app.use(
+  express.json({
+    limit: "10mb",
+    verify: (req, res, buf) => {
+      req.rawBody = buf;
+    },
+  }),
+);
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 
 // Static files
@@ -59,6 +67,8 @@ app.use("/api/orders", orderRoutes);
 console.log("Order routes mounted");
 app.use("/api/guest-orders", guestOrderRoutes);
 console.log("Guest order routes mounted");
+app.use("/api/payments", paymentRoutes);
+console.log("Payment routes mounted");
 app.use("/api/newsletter", newsletterRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/wishlist", wishlistRoutes);

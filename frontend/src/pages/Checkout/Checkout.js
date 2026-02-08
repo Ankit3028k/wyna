@@ -15,10 +15,22 @@ const Checkout = () => {
     address: "",
     city: "",
     postalCode: "",
-    paymentMethod: "card",
+    paymentMethod: "cod",
   });
   const [loading, setLoading] = useState(false);
   const [total, setTotal] = useState(0);
+
+  const loadRazorpayScript = () => {
+    return new Promise((resolve) => {
+      if (window.Razorpay) return resolve(true);
+
+      const script = document.createElement("script");
+      script.src = "https://checkout.razorpay.com/v1/checkout.js";
+      script.onload = () => resolve(true);
+      script.onerror = () => resolve(false);
+      document.body.appendChild(script);
+    });
+  };
 
   useEffect(() => {
     const cart = JSON.parse(localStorage.getItem("cart") || "[]");
@@ -70,13 +82,82 @@ const Checkout = () => {
         paymentMethod: formData.paymentMethod,
       };
 
-      const response = await axios.post(API_CONFIG.buildUrl('/api/guest-orders'), orderData);
+      if (formData.paymentMethod === "cod") {
+        const response = await axios.post(API_CONFIG.buildUrl("/api/guest-orders"), orderData);
 
-      if (response.status === 201 || response.status === 200) {
-        toast.success(`Order placed successfully! Order #${response.data.data.orderNumber}`);
-        localStorage.removeItem("cart");
-        navigate("/");
+        if (response.status === 201 || response.status === 200) {
+          toast.success(`Order placed successfully! Order #${response.data.data.orderNumber}`);
+          localStorage.removeItem("cart");
+          navigate("/");
+        }
+        return;
       }
+
+      const scriptLoaded = await loadRazorpayScript();
+      if (!scriptLoaded) {
+        toast.error("Failed to load Razorpay. Please try again.");
+        return;
+      }
+
+      const createRes = await axios.post(
+        API_CONFIG.buildUrl("/api/payments/razorpay/create-order"),
+        orderData,
+      );
+
+      const paymentData = createRes?.data?.data;
+      if (!paymentData?.razorpayOrderId || !paymentData?.keyId) {
+        toast.error("Failed to initiate payment");
+        return;
+      }
+
+      const options = {
+        key: paymentData.keyId,
+        amount: paymentData.amount,
+        currency: paymentData.currency,
+        name: "WYNA",
+        description: `Order ${paymentData.orderNumber}`,
+        order_id: paymentData.razorpayOrderId,
+        prefill: {
+          name: paymentData.customer?.name,
+          email: paymentData.customer?.email,
+          contact: paymentData.customer?.contact,
+        },
+        handler: async (response) => {
+          try {
+            const verifyRes = await axios.post(
+              API_CONFIG.buildUrl("/api/payments/razorpay/verify"),
+              {
+                orderId: paymentData.orderId,
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature,
+              },
+            );
+
+            if (verifyRes?.data?.success) {
+              toast.success(`Payment successful! Order #${paymentData.orderNumber}`);
+              localStorage.removeItem("cart");
+              navigate("/");
+            } else {
+              toast.error("Payment verification failed");
+            }
+          } catch (err) {
+            toast.error("Payment verification failed");
+            console.error(err);
+          }
+        },
+        modal: {
+          ondismiss: () => {
+            toast.error("Payment cancelled");
+          },
+        },
+        theme: {
+          color: "#b89b5e",
+        },
+      };
+
+      const rzp = new window.Razorpay(options);
+      rzp.open();
     } catch (error) {
       toast.error("Failed to place order");
       console.error(error);
@@ -188,11 +269,23 @@ const Checkout = () => {
                   <input
                     type="radio"
                     name="paymentMethod"
-                    value="card"
-                    checked={formData.paymentMethod === "card"}
+                    value="cod"
+                    checked={formData.paymentMethod === "cod"}
                     onChange={handleInputChange}
                   />
                   Cash on Delivery
+                </label>
+              </div>
+              <div className="radio-group">
+                <label>
+                  <input
+                    type="radio"
+                    name="paymentMethod"
+                    value="online"
+                    checked={formData.paymentMethod === "online"}
+                    onChange={handleInputChange}
+                  />
+                  Pay Online (Razorpay)
                 </label>
               </div>
               {/* <div className="radio-group">

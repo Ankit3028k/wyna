@@ -70,6 +70,12 @@ const orderSchema = new mongoose.Schema({
       default: 'India'
     }
   },
+  customerEmail: {
+    type: String,
+    required: false,
+    lowercase: true,
+    trim: true
+  },
   paymentMethod: {
     type: String,
     required: true,
@@ -79,6 +85,28 @@ const orderSchema = new mongoose.Schema({
     type: String,
     enum: ['pending', 'completed', 'failed', 'refunded'],
     default: 'pending'
+  },
+  paymentProvider: {
+    type: String,
+    enum: ['razorpay'],
+    required: false
+  },
+  razorpayOrderId: {
+    type: String,
+    required: false,
+    index: true
+  },
+  razorpayPaymentId: {
+    type: String,
+    required: false
+  },
+  razorpaySignature: {
+    type: String,
+    required: false
+  },
+  paidAt: {
+    type: Date,
+    required: false
   },
   orderStatus: {
     type: String,
@@ -108,6 +136,14 @@ const orderSchema = new mongoose.Schema({
   notes: {
     type: String,
     maxlength: 500
+  },
+  trackingNumber: {
+    type: String,
+    required: false
+  },
+  inventoryAdjustedAt: {
+    type: Date,
+    required: false
   },
   deliveredAt: Date,
   cancelledAt: Date,

@@ -1,9 +1,13 @@
 // API Configuration
-console.log('=== API CONFIG DEBUG ===');
-console.log('Environment REACT_APP_API_URL:', process.env.REACT_APP_API_URL);
-console.log('typeof process.env.REACT_APP_API_URL:', typeof process.env.REACT_APP_API_URL);
-console.log('All REACT_APP_ env vars:', Object.keys(process.env).filter(key => key.startsWith('REACT_APP_')));
-console.log('NODE_ENV:', process.env.NODE_ENV);
+const isProd = process.env.NODE_ENV === 'production';
+
+if (!isProd) {
+  console.log('=== API CONFIG DEBUG ===');
+  console.log('Environment REACT_APP_API_URL:', process.env.REACT_APP_API_URL);
+  console.log('typeof process.env.REACT_APP_API_URL:', typeof process.env.REACT_APP_API_URL);
+  console.log('All REACT_APP_ env vars:', Object.keys(process.env).filter(key => key.startsWith('REACT_APP_')));
+  console.log('NODE_ENV:', process.env.NODE_ENV);
+}
 
 // Use environment variable or fallback to production URL
 const configuredUrl = process.env.REACT_APP_API_URL || 'https://wyna.in';
@@ -25,19 +29,23 @@ const sanitizedUrl = (url) => {
 
 const finalUrl = sanitizedUrl(configuredUrl) || 'https://wyna.in';
 
-console.log('Configured URL:', configuredUrl);
-console.log('Sanitized URL:', finalUrl);
+if (!isProd) {
+  console.log('Configured URL:', configuredUrl);
+  console.log('Sanitized URL:', finalUrl);
+}
 
 const API_CONFIG = {
   BASE_URL: finalUrl,
   
   // Debug method to check URL construction
   debugUrlConstruction() {
-    console.log('=== URL Construction Debug ===');
-    console.log('BASE_URL:', this.BASE_URL);
-    console.log('typeof BASE_URL:', typeof this.BASE_URL);
-    console.log('ENDPOINTS.PRODUCTS:', this.ENDPOINTS.PRODUCTS);
-    console.log('Full URL:', this.buildUrl(this.ENDPOINTS.PRODUCTS));
+    if (!isProd) {
+      console.log('=== URL Construction Debug ===');
+      console.log('BASE_URL:', this.BASE_URL);
+      console.log('typeof BASE_URL:', typeof this.BASE_URL);
+      console.log('ENDPOINTS.PRODUCTS:', this.ENDPOINTS.PRODUCTS);
+      console.log('Full URL:', this.buildUrl(this.ENDPOINTS.PRODUCTS));
+    }
   },
   
   // API Endpoints
@@ -70,11 +78,13 @@ const API_CONFIG = {
   // Helper method to build full URLs
   buildUrl(endpoint) {
     const fullUrl = `${this.BASE_URL}${endpoint}`;
-    console.log('API Config - Building URL:', { 
-      baseUrl: this.BASE_URL, 
-      endpoint: endpoint, 
-      fullUrl: fullUrl 
-    });
+    if (!isProd) {
+      console.log('API Config - Building URL:', {
+        baseUrl: this.BASE_URL,
+        endpoint: endpoint,
+        fullUrl: fullUrl,
+      });
+    }
     return fullUrl;
   }
 };
