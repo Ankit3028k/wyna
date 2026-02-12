@@ -637,3 +637,158 @@
 .btn-add-to-cart i {
   font-size: 1.2rem;
 }
+
+/* Pagination Styles */
+.pagination-container {
+  margin-top: 3rem;
+  padding: 2rem 0;
+  border-top: 1px solid #ffe4e1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.pagination-info {
+  color: #666;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.pagination-btn {
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #8b0000 0%, #6b0000 100%);
+  color: #ffd700;
+  border: none;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 2px 8px rgba(139, 0, 0, 0.2);
+}
+
+.pagination-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(139, 0, 0, 0.3);
+  background: linear-gradient(135deg, #6b0000 0%, #8b0000 100%);
+}
+
+.pagination-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.pagination-numbers {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.pagination-number {
+  width: 40px;
+  height: 40px;
+  border: 2px solid #8b0000;
+  background: white;
+  color: #8b0000;
+  border-radius: 50%;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pagination-number:hover {
+  background: rgba(139, 0, 0, 0.1);
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(139, 0, 0, 0.2);
+}
+
+.pagination-number.active {
+  background: linear-gradient(135deg, #8b0000 0%, #6b0000 100%);
+  color: #ffd700;
+  border-color: #ffd700;
+  box-shadow: 0 4px 12px rgba(139, 0, 0, 0.3);
+}
+
+.pagination-ellipsis {
+  color: #999;
+  font-size: 1.2rem;
+  padding: 0 0.5rem;
+  font-weight: bold;
+}
+
+/* Responsive Pagination */
+@media (max-width: 768px) {
+  .pagination-container {
+    margin-top: 2rem;
+    padding: 1.5rem 0;
+  }
+  
+  .pagination-controls {
+    gap: 0.75rem;
+  }
+  
+  .pagination-btn {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.85rem;
+  }
+  
+  .pagination-number {
+    width: 35px;
+    height: 35px;
+    font-size: 0.85rem;
+  }
+  
+  .pagination-numbers {
+    gap: 0.3rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .pagination-container {
+    margin-top: 1.5rem;
+    padding: 1rem 0;
+    gap: 1rem;
+  }
+  
+  .pagination-info {
+    font-size: 0.85rem;
+  }
+  
+  .pagination-controls {
+    gap: 0.5rem;
+  }
+  
+  .pagination-btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+  }
+  
+  .pagination-number {
+    width: 32px;
+    height: 32px;
+    font-size: 0.8rem;
+  }
+  
+  .pagination-ellipsis {
+    font-size: 1rem;
+    padding: 0 0.3rem;
+  }
+}

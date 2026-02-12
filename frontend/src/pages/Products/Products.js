@@ -15,6 +15,19 @@ const Products = () => {
   const [filter, setFilter] = useState("all");
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [pagination, setPagination] = useState({
+    currentPage: 1,
+    totalPages: 1,
+    totalProducts: 0,
+    hasNextPage: false,
+    hasPrevPage: false
+  });
+  const [limit] = useState(12);
+
+  useEffect(() => {
+    // Reset to page 1 when search query or slug changes
+    setPagination(prev => ({ ...prev, currentPage: 1 }));
+  }, [searchQuery, slug]);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -32,6 +45,10 @@ const Products = () => {
           const separator = apiUrl.includes('?') ? '&' : '?';
           apiUrl += `${separator}search=${searchQuery}`;
         }
+        
+        // Add pagination parameters
+        const pageSeparator = apiUrl.includes('?') ? '&' : '?';
+        apiUrl += `${pageSeparator}page=${pagination.currentPage}&limit=${limit}`;
         
         const response = await fetch(apiUrl);
         const data = await response.json();
@@ -56,6 +73,21 @@ const Products = () => {
         
         setProducts(transformedProducts);
         setFilteredProducts(transformedProducts);
+        
+        // Set pagination data from response
+        if (data.pagination) {
+          setPagination(data.pagination);
+        } else {
+          // Fallback for basic pagination response
+          setPagination({
+            currentPage: data.currentPage || 1,
+            totalPages: data.totalPages || 1,
+            totalProducts: data.total || 0,
+            hasNextPage: (data.currentPage || 1) < (data.totalPages || 1),
+            hasPrevPage: (data.currentPage || 1) > 1
+          });
+        }
+        
         setLoading(false);
       } catch (error) {
         console.error("Error fetching products:", error);
@@ -65,10 +97,12 @@ const Products = () => {
     };
     
     fetchProducts();
-  }, [slug, searchQuery]);
+  }, [slug, searchQuery, pagination.currentPage, limit]);
 
   const handleFilter = (filterType) => {
     setFilter(filterType);
+    // Reset to page 1 when filter changes
+    setPagination(prev => ({ ...prev, currentPage: 1 }));
     const productsArray = Array.isArray(products) ? products : [];
     if (filterType === "all") {
       setFilteredProducts(productsArray);
@@ -81,6 +115,63 @@ const Products = () => {
         productsArray.slice(Math.ceil(productsArray.length / 2))
       );
     }
+  };
+
+  // Pagination handlers
+  const handlePageChange = (newPage) => {
+    if (newPage >= 1 && newPage <= pagination.totalPages) {
+      setPagination(prev => ({ ...prev, currentPage: newPage }));
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (pagination.hasPrevPage) {
+      setPagination(prev => ({ ...prev, currentPage: prev.currentPage - 1 }));
+    }
+  };
+
+  const handleNextPage = () => {
+    if (pagination.hasNextPage) {
+      setPagination(prev => ({ ...prev, currentPage: prev.currentPage + 1 }));
+    }
+  };
+
+  // Generate page numbers for pagination
+  const getPageNumbers = () => {
+    const { currentPage, totalPages } = pagination;
+    const pageNumbers = [];
+    
+    if (totalPages <= 7) {
+      // Show all pages if total is 7 or less
+      for (let i = 1; i <= totalPages; i++) {
+        pageNumbers.push(i);
+      }
+    } else {
+      // Show first page, current page, and last page with ellipsis
+      if (currentPage <= 4) {
+        for (let i = 1; i <= 5; i++) {
+          pageNumbers.push(i);
+        }
+        pageNumbers.push('...');
+        pageNumbers.push(totalPages);
+      } else if (currentPage >= totalPages - 3) {
+        pageNumbers.push(1);
+        pageNumbers.push('...');
+        for (let i = totalPages - 4; i <= totalPages; i++) {
+          pageNumbers.push(i);
+        }
+      } else {
+        pageNumbers.push(1);
+        pageNumbers.push('...');
+        for (let i = currentPage - 1; i <= currentPage + 1; i++) {
+          pageNumbers.push(i);
+        }
+        pageNumbers.push('...');
+        pageNumbers.push(totalPages);
+      }
+    }
+    
+    return pageNumbers;
   };
 
   // const handleBuyNow = (product) => {
@@ -231,6 +322,52 @@ const Products = () => {
                 </button>
               </div>
             ))}
+          </div>
+        )}
+        
+        {/* Pagination */}
+        {pagination.totalPages > 1 && (
+          <div className="pagination-container">
+            <div className="pagination-info">
+              <span>
+                Showing {((pagination.currentPage - 1) * limit) + 1} to {Math.min(pagination.currentPage * limit, pagination.totalProducts)} of {pagination.totalProducts} products
+              </span>
+            </div>
+            
+            <div className="pagination-controls">
+              <button
+                className="pagination-btn prev-btn"
+                onClick={handlePrevPage}
+                disabled={!pagination.hasPrevPage}
+              >
+                <i className="fas fa-chevron-left"></i> Previous
+              </button>
+              
+              <div className="pagination-numbers">
+                {getPageNumbers().map((pageNum, index) => (
+                  <span key={index}>
+                    {pageNum === '...' ? (
+                      <span className="pagination-ellipsis">...</span>
+                    ) : (
+                      <button
+                        className={`pagination-number ${pageNum === pagination.currentPage ? 'active' : ''}`}
+                        onClick={() => handlePageChange(pageNum)}
+                      >
+                        {pageNum}
+                      </button>
+                    )}
+                  </span>
+                ))}
+              </div>
+              
+              <button
+                className="pagination-btn next-btn"
+                onClick={handleNextPage}
+                disabled={!pagination.hasNextPage}
+              >
+                Next <i className="fas fa-chevron-right"></i>
+              </button>
+            </div>
           </div>
         )}
       </div>
